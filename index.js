@@ -51,7 +51,7 @@ app.get('/', (req, res) => {
     res.json({message: "Hello World!"});
 });
 
-const authenticateToken = (req, res, next) =>{
+const authenticateToken = (req, res, next) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
 
@@ -67,6 +67,7 @@ const authenticateToken = (req, res, next) =>{
 };
 
 // Routes
+// Test comment
 app.use(`${process.env.API_VERSION}/user`, authenticateToken, userRoute);
 app.use(`${process.env.API_VERSION}/task`, authenticateToken, taskRoute);
 app.use(`${process.env.API_VERSION}/login`, loginRoute);
@@ -76,4 +77,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
-
