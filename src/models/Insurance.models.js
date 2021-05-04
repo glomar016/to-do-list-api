@@ -5,7 +5,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 
     // class Guide. Guide should be name of the file name.
-  class Bus_feature extends Model {
+  class Insurance extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -25,19 +25,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID
         });
 
-
     // Add your additional association here
-        this.belongsTo(models.Bus_information , {
-            foreignKey: "informationId",
-            type: DataTypes.UUID
-        });
-
+        
     // End of your additional association 
     }
   }
   
   // Change Guide.init to {{Filename}}.init 
-  Bus_feature.init(
+  Insurance.init(
     {
         // Default column this is a primary key
         id: {
@@ -48,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
 
         // Default column this is the status of the row if it is deleted or active
         status: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(60),
             defaultValue: "Active",
         },
 
@@ -70,29 +65,44 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
     
-        // Add your additional columns here 
-        informationId: {
-            type: DataTypes.UUID,
-            allowNull: true, 
-        }, 
-        feature: {
+        // Add your additional columns here //
+        code: {
             type: DataTypes.STRING(255),
-            validate: {
-                notNull: { msg: "Column name should not be null." },         // if column cannot be null
-            },
+            allowNull: true, 
         },
-        // End of additional columns 
+        name: {
+            type: DataTypes.STRING(255),
+            allowNull: true, 
+        },
+        effectivityDate: {
+            type: DataTypes.DATE,
+            allowNull: true, 
+        },
+        amount: {
+            type: DataTypes.STRING(255),
+            allowNull: true, 
+        },
+        details: {
+            type: DataTypes.TEXT,
+            allowNull: true, 
+        },
+        document: {
+            type: DataTypes.STRING(255),
+            allowNull: true, 
+        },
+        
+        // End of additional columns //
     },
     {
         sequelize,
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "Bus_feature", // Change model name base on file name
+        modelName: "insurance", // Change model name base on file name
     }
   );
 
   // Change Guide to file name first letter should be in upper case
-  return Bus_feature;
+  return Insurance;
 };
 // ------------------------------------------------------------------------ END OF MODEL ----------------------------------------------------------------------------------- //

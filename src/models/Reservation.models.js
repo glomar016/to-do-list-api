@@ -5,7 +5,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 
     // class Guide. Guide should be name of the file name.
-  class User extends Model {
+  class Reservation extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -25,14 +25,26 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID
         });
 
+
     // Add your additional association here
-        
+       
+
+        this.belongsTo(models.Schedule , {
+            foreignKey: "scheduleId",
+            type: DataTypes.UUID
+        });
+
+        this.belongsTo(models.Promo , {
+            foreignKey: "promoId",
+            type: DataTypes.UUID
+        });
+
     // End of your additional association 
     }
   }
   
   // Change Guide.init to {{Filename}}.init 
-  User.init(
+  Reservation.init(
     {
         // Default column this is a primary key
         id: {
@@ -43,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
 
         // Default column this is the status of the row if it is deleted or active
         status: {
-            type: DataTypes.STRING(60),
+            type: DataTypes.STRING,
             defaultValue: "Active",
         },
 
@@ -65,125 +77,60 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
     
-        // Add your additional columns here //
-        firstName: {
-            type: DataTypes.STRING,
+        // Add your additional columns here 
+        name: {
+            type: DataTypes.STRING(500),
             allowNull: true, 
-        },
+        }, 
 
-        middleName: {
-            type: DataTypes.STRING,
+        payment: {
+            type: DataTypes.STRING(500),
             allowNull: true, 
-        },
+        }, 
+
+        billingAddress: {
+            type: DataTypes.STRING(1000),
+            allowNull: true, 
+        }, 
+
+        modeOfPayment: {
+            type: DataTypes.STRING(500),
+            allowNull: true, 
+        }, 
+
+        referenceNumber: {
+            type: DataTypes.STRING(500),
+            allowNull: true, 
+        }, 
+
+        currentStatus: {
+            type: DataTypes.STRING(500),
+            allowNull: true, 
+        }, 
+
+        totalAmount: {
+            type: DataTypes.STRING(500),
+            allowNull: true, 
+        }, 
+
+        totalDiscount: {
+            type: DataTypes.STRING(500),
+            allowNull: true, 
+        }, 
+
         
-        lastName: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        birthday: {
-            type: DataTypes.DATEONLY,
-            allowNull: true, 
-        },
-
-        gender: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        mobileNumber: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        email: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            unique: {
-                msg: "Email address already exist."
-            },
-            isEmail: {
-                msg: "Email is invalid."
-            }, 
-        },
-
-        address: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        municipality: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        province: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        country: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        zipCode: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        securityQuestion: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        answer: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        gender: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        password: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        photo: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        position: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        employeeNumber: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        userType: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-        
-        // End of additional columns //
+        // End of additional columns 
     },
     {
         sequelize,
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "user", // Change model name base on file name
+        modelName: "reservation", // Change model name base on file name
     }
   );
 
   // Change Guide to file name first letter should be in upper case
-  return User;
+  return Reservation;
 };
 // ------------------------------------------------------------------------ END OF MODEL ----------------------------------------------------------------------------------- //

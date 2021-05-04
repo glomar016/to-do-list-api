@@ -5,7 +5,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 
     // class Guide. Guide should be name of the file name.
-  class User extends Model {
+  class Schedule extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -26,13 +26,21 @@ module.exports = (sequelize, DataTypes) => {
         });
 
     // Add your additional association here
+        this.belongsTo(models.Route, {
+            foreignKey: "routeId",
+            type: DataTypes.UUID
+        });
+        this.belongsTo(models.Bus_type, {
+            foreignKey: "busTypeId",
+            type: DataTypes.UUID
+        });
         
     // End of your additional association 
     }
   }
   
   // Change Guide.init to {{Filename}}.init 
-  User.init(
+  Schedule.init(
     {
         // Default column this is a primary key
         id: {
@@ -66,109 +74,48 @@ module.exports = (sequelize, DataTypes) => {
         },
     
         // Add your additional columns here //
-        firstName: {
-            type: DataTypes.STRING,
+        estimatedTimeTravel: {
+            type: DataTypes.STRING(255),
             allowNull: true, 
         },
-
-        middleName: {
-            type: DataTypes.STRING,
+        hourFrom: {
+            type: DataTypes.DATE,
             allowNull: true, 
         },
-        
-        lastName: {
-            type: DataTypes.STRING,
+        hourTo: {
+            type: DataTypes.DATE,
             allowNull: true, 
         },
-
-        birthday: {
-            type: DataTypes.DATEONLY,
+        willArriveTheNextDay: {
+            type: DataTypes.STRING(255),
             allowNull: true, 
         },
-
-        gender: {
-            type: DataTypes.STRING,
+        monday: {
+            type: DataTypes.STRING(255),
             allowNull: true, 
         },
-
-        mobileNumber: {
-            type: DataTypes.STRING,
+        tuesday: {
+            type: DataTypes.STRING(255),
             allowNull: true, 
         },
-
-        email: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            unique: {
-                msg: "Email address already exist."
-            },
-            isEmail: {
-                msg: "Email is invalid."
-            }, 
-        },
-
-        address: {
-            type: DataTypes.STRING,
+        wednesday: {
+            type: DataTypes.STRING(255),
             allowNull: true, 
         },
-
-        municipality: {
-            type: DataTypes.STRING,
+        thursday: {
+            type: DataTypes.STRING(255),
             allowNull: true, 
         },
-
-        province: {
-            type: DataTypes.STRING,
+        friday: {
+            type: DataTypes.STRING(255),
             allowNull: true, 
         },
-
-        country: {
-            type: DataTypes.STRING,
+        saturday: {
+            type: DataTypes.STRING(255),
             allowNull: true, 
         },
-
-        zipCode: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        securityQuestion: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        answer: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        gender: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        password: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        photo: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        position: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        employeeNumber: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        userType: {
-            type: DataTypes.STRING,
+        sunday: {
+            type: DataTypes.STRING(255),
             allowNull: true, 
         },
         
@@ -179,11 +126,12 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "user", // Change model name base on file name
+        modelName: "schedule", // Change model name base on file name
     }
   );
 
   // Change Guide to file name first letter should be in upper case
-  return User;
+  return Schedule;
 };
 // ------------------------------------------------------------------------ END OF MODEL ----------------------------------------------------------------------------------- //
+

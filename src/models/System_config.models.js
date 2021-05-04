@@ -5,7 +5,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 
     // class Guide. Guide should be name of the file name.
-  class User extends Model {
+  class System_config extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -25,14 +25,15 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID
         });
 
+
     // Add your additional association here
-        
+
     // End of your additional association 
     }
   }
   
   // Change Guide.init to {{Filename}}.init 
-  User.init(
+  Bus_feature.init(
     {
         // Default column this is a primary key
         id: {
@@ -43,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
 
         // Default column this is the status of the row if it is deleted or active
         status: {
-            type: DataTypes.STRING(60),
+            type: DataTypes.STRING,
             defaultValue: "Active",
         },
 
@@ -64,126 +65,108 @@ module.exports = (sequelize, DataTypes) => {
                 key: "id"
             }
         },
-    
-        // Add your additional columns here //
-        firstName: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        // Add your additional columns here 
+        dateCreated :{
+            type: DataTypes.DATETIME,
+            defaultValue: Sequelize.NOW
         },
 
-        middleName: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-        
-        lastName: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        birthday: {
-            type: DataTypes.DATEONLY,
-            allowNull: true, 
-        },
-
-        gender: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        mobileNumber: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        email: {
-            type: DataTypes.STRING,
+        emailProtocol :{
+            type: DataTypes.STRING(500),
             allowNull: true,
-            unique: {
-                msg: "Email address already exist."
-            },
-            isEmail: {
-                msg: "Email is invalid."
-            }, 
         },
 
-        address: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        SMTPHost :{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        municipality: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        SMTPPort :{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        province: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        SSMTPUser :{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        country: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        SMTPPassword :{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        zipCode: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        SMTPEmailType :{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        securityQuestion: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        reservationRunningNumber :{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        answer: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        ticketRunningNumber :{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        gender: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        numberOfDaysAllowCancellation:{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        password: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        numberOfDaysToCancelIfNotPaid:{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        photo: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        maxReservationPerPerson:{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        position: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        minDaysReserveFromCurrentDate:{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        employeeNumber: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        maxDaysReserveFromCurrentDate:{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
 
-        userType: {
-            type: DataTypes.STRING,
-            allowNull: true, 
+        paymayaPublicKey:{
+            type: DataTypes.STRING(500),
+            allowNull: true,
         },
-        
-        // End of additional columns //
+
+        paymayaPrivateKey:{
+            type: DataTypes.STRING(500),
+            allowNull: true,
+        },
+
+        paymayaURL:{
+            type: DataTypes.STRING(500),
+            allowNull: true,
+        },
+
+        paymayaTransactionFee:{
+            type: DataTypes.STRING(500),
+            allowNull: true,
+        },
+        // End of additional columns 
     },
     {
         sequelize,
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "user", // Change model name base on file name
+        modelName: "System_config", // Change model name base on file name
     }
   );
 
   // Change Guide to file name first letter should be in upper case
-  return User;
+  return System_config;
 };
 // ------------------------------------------------------------------------ END OF MODEL ----------------------------------------------------------------------------------- //
