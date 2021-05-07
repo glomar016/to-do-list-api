@@ -4,7 +4,7 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
 
-    // class Guide. Guide should be name of the file name.
+// class Guide. Guide should be name of the file name.
   class Bus_driver extends Model {
     /**
      * Helper method for defining associations.
@@ -12,21 +12,19 @@ module.exports = (sequelize, DataTypes) => {
      * The models/index file will call this method automatically.
      */
     static associate(models) {
-      
-    // Default in every static associate
+        // Default in every static associate
         this.belongsTo(models.User, {
             foreignKey: "created_by",
             type: DataTypes.UUID
         });
 
-    // Default in every static associate
+        // Default in every static associate
         this.belongsTo(models.User, {
             foreignKey: "updated_by",
             type: DataTypes.UUID
         });
 
-
-    // Add your additional association here
+        // Add your additional association here
         this.belongsTo(models.Bus_information , {
             foreignKey: "informationId",
             type: DataTypes.UUID
@@ -36,8 +34,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: "driverUserId",
             type: DataTypes.UUID
         });
-
-    // End of your additional association 
+        // End of your additional association 
     }
   }
   
@@ -79,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
         // Add your additional columns here 
   
         // Could be driver or conductor
-         type: {
+        type: {
             type: DataTypes.STRING(255),
             allowNull: true, 
         },

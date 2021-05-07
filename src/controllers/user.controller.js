@@ -44,7 +44,7 @@ exports.findDataTable = (req, res) => {
 // Create
 exports.create = async (req, res) => {
     req.body.full_name = "";
-
+    
     req.body.created_by = req.user.id;
 
     req.body.password = await bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUND));
