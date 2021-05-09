@@ -66,7 +66,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 // Routes
-// Test comment
+
 app.use(`${process.env.API_VERSION}/user`, authenticateToken, userRoute);
 app.use(`${process.env.API_VERSION}/login`, loginRoute);
 
