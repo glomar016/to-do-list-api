@@ -19,11 +19,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID
         });
 
-        this.belongsTo(models.Counter , {
-            foreignKey: "terminalId",
-            type: DataTypes.UUID
-        });
-
     }
   }
   
@@ -46,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -55,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -63,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
  
         name: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: false,
             validate: {
                 notNull: { msg: "Terminal Name is required." },
                 notEmpty: { msg: "Terminal Name should not be empty." },
@@ -76,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "counter", 
+        modelName: "Counter", 
     }
   );
 

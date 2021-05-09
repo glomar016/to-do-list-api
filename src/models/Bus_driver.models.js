@@ -25,12 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         });
 
         // Add your additional association here
-        this.belongsTo(models.Bus_information , {
-            foreignKey: "informationId",
-            type: DataTypes.UUID
-        });
-
-        this.belongsTo(models.User , {
+        this.belongsTo(models.User, {
             foreignKey: "driverUserId",
             type: DataTypes.UUID
         });
@@ -58,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -68,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -90,7 +85,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "bus_driver", // Change model name base on file name
+        modelName: "Bus_driver", // Change model name base on file name
     }
   );
 

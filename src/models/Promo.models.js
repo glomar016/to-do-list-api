@@ -15,10 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: "updated_by",
             type: DataTypes.UUID
         });
-        this.belongsTo(models.Bus_type, {
-            foreignKey: "busTypeId",
-            type: DataTypes.UUID
-        });
+        
     }
   }
   Promo.init(
@@ -35,28 +32,14 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
-                key: "id"
-            }
-        },
-        created_at: {
-            type: DataTypes.DATE,
-            references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
-                key: "id"
-            }
-        },
-        updated_at: {
-            type: DataTypes.UUID,
-            references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -117,7 +100,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "promo", 
+        modelName: "Promo", 
     }
   );
 

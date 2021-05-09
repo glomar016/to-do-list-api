@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -51,14 +51,14 @@ module.exports = (sequelize, DataTypes) => {
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
     
         name: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: false,
             validate: {
                     notEmpty: { msg: "Chart of account name is required."},
                     notNull: { msg: "Chart of account name is required."},
@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "chart_of_account", 
+        modelName: "Chart_of_account", 
     });
 
   return Chart_of_account;

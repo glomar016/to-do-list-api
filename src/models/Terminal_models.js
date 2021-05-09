@@ -30,6 +30,13 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: "contactPersonUserId",
             type: DataTypes.UUID
         });
+
+        
+        this.hasMany(models.Counter , {
+            foreignKey: "terminalId",
+            type: DataTypes.UUID
+        });
+
     // End of your additional association 
     }
   }
@@ -55,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -64,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -73,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
         
     name: {
         type: DataTypes.STRING(500),
-        allowNull: true,
+        allowNull: false,
         validate: {
           notNull: { msg: "Terminal Name is required." },
           notEmpty: { msg: "Terminal Name should not be empty." },
@@ -102,7 +109,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "terminal", // Change model name base on file name
+        modelName: "Terminal", // Change model name base on file name
     }
   );  
 

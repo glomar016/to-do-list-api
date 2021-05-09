@@ -15,11 +15,11 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: "updated_by",
             type: DataTypes.UUID
         });
-        this.belongsTo(models.schedule, {
+        this.belongsTo(models.Schedule, {
             foreignKey: "informationId",
             type: DataTypes.UUID
         });
-        this.belongsTo(models.bus_information, {
+        this.belongsTo(models.Bus_information, {
             foreignKey: "scheduleId",
             type: DataTypes.UUID
         });
@@ -39,28 +39,14 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
-                key: "id"
-            }
-        },
-        created_at: {
-            type: DataTypes.DATE,
-            references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
-                key: "id"
-            }
-        },
-        updated_at: {
-            type: DataTypes.UUID,
-            references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -75,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "Bus_promo", 
+        modelName: "Bus_schedule", 
     }
   );
 

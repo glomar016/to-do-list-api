@@ -23,10 +23,7 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.UUID
       });
 
-      this.belongsTo(models.Reservation, {
-          foreignKey: "reservationId",
-          type: DataTypes.UUID,
-      });
+      
 
       this.belongsTo(models.Landmark, {
           foreignKey: "passengerLandmarkId",
@@ -68,14 +65,14 @@ module.exports = (sequelize, DataTypes) => {
     created_by: {
         type: DataTypes.UUID,
         references: {
-            model: User,
+            model: sequelize.User,
             key: "id",
         },
     },
     updated_by: {
         type: DataTypes.UUID,
         references: {
-            model: User,
+            model: sequelize.User,
             key: "id",
         },
     },
@@ -102,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
-    modelName: 'reservation_line',
+    modelName: 'Reservation_line',
   });
   return Reservation_line;
 };

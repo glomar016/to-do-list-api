@@ -12,10 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: "updated_by",
             type: DataTypes.UUID
         });
-        this.belongsTo(models.Route, {
-            foreignKey: "routeId",
-            type: DataTypes.UUID
-        });
+        
     }
   }
   Landmark.init(
@@ -32,34 +29,20 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
-                key: "id"
-            }
-        },
-        created_at: {
-            type: DataTypes.DATE,
-            references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
-        updated_at: {
-            type: DataTypes.UUID,
-            references: {
-                model: User,
-                key: "id"
-            }
-        }, 
         name: {
             type: DataTypes.STRING(500),
-            allowNull: true,
+            allowNull: false,
             validate: {
               notNull: { msg: "Landmark Name is required." },
               notEmpty: { msg: "Landmark Name should not be empty." },
@@ -79,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "landmark",
+        modelName: "Landmark",
     }
   );
   return Landmark;

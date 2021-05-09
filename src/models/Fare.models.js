@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -97,7 +97,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "fare", // Change model name base on file name
+        modelName: "Fare", // Change model name base on file name
     }
   );
 

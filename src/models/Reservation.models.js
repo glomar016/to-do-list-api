@@ -27,8 +27,7 @@ module.exports = (sequelize, DataTypes) => {
 
 
     // Add your additional association here
-       
-
+    
         this.belongsTo(models.Schedule , {
             foreignKey: "scheduleId",
             type: DataTypes.UUID
@@ -37,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         this.belongsTo(models.Promo , {
             foreignKey: "promoId",
             type: DataTypes.UUID
+        });
+
+        this.hasMany(models.Reservation_line, {
+            foreignKey: "reservationId",
+            type: DataTypes.UUID,
         });
 
     // End of your additional association 
@@ -63,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -72,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -126,7 +130,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "reservation", // Change model name base on file name
+        modelName: "Reservation", // Change model name base on file name
     }
   );
 

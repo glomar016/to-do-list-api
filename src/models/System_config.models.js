@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   
   // Change Guide.init to {{Filename}}.init 
-  Bus_feature.init(
+  System_config.init(
     {
         // Default column this is a primary key
         id: {
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -61,16 +61,11 @@ module.exports = (sequelize, DataTypes) => {
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
         // Add your additional columns here 
-        dateCreated :{
-            type: DataTypes.DATETIME,
-            defaultValue: Sequelize.NOW
-        },
-
         emailProtocol :{
             type: DataTypes.STRING(500),
             allowNull: true,

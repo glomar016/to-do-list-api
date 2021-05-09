@@ -35,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: "destinationId",
             type: DataTypes.UUID
         });
+
+        this.hasMany(models.Landmark, {
+            foreignKey: "routeId",
+            type: DataTypes.UUID
+        });
     // End of your additional association 
     }
   }
@@ -60,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -69,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -92,7 +97,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "route", // Change model name base on file name
+        modelName: "Route", // Change model name base on file name
     }
   );  
 

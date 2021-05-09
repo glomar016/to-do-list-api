@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID
         });
 
+        this.hasMany(models.Bus_driver , {
+            foreignKey: "busInformationId",
+            type: DataTypes.UUID
+        });
     }
   }
   
@@ -49,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
         created_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -57,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
         updated_by: {
             type: DataTypes.UUID,
             references: {
-                model: User,
+                model: sequelize.User,
                 key: "id"
             }
         },
@@ -138,6 +142,18 @@ module.exports = (sequelize, DataTypes) => {
         netCapacity: {
             type: DataTypes.STRING,
             allowNull: true,
+        },
+        hasWifi: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        hasAircon: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        hasTelevision: {
+            type: DataTypes.STRING,
+            allowNull: true,
         }
     },
 
@@ -146,7 +162,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "bus_information",
+        modelName: "Bus_information",
     }
   );
 

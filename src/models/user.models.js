@@ -179,7 +179,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "user", // Change model name base on file name
+        modelName: "User", // Change model name base on file name
     }
   );
 
