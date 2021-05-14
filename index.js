@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 // Import routes
 const userRoute = require('./src/routes/user.routes');
 const loginRoute = require('./src/routes/login.routes');
+const busInfoRoute = require('./src/routes/bus_information.routes');
 
 var app = express();
 
@@ -69,6 +70,7 @@ const authenticateToken = (req, res, next) => {
 
 app.use(`${process.env.API_VERSION}/user`, authenticateToken, userRoute);
 app.use(`${process.env.API_VERSION}/login`, loginRoute);
+app.use(`${process.env.API_VERSION}/bus_information`, busInfoRoute);
 
 const PORT = process.env.PORT || 5000;
 
