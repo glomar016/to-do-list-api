@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       
     // Default in every static associate
         this.belongsTo(models.User, {
+            as: "createdBy",
             foreignKey: "created_by",
             type: DataTypes.UUID
         });
@@ -138,11 +139,6 @@ module.exports = (sequelize, DataTypes) => {
         },
 
         answer: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        gender: {
             type: DataTypes.STRING,
             allowNull: true, 
         },
