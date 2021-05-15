@@ -4,42 +4,6 @@ const Landmark = db.Landmark;
 const bcrypt = require("bcrypt");
 const datatables = require("sequelize-datatables");
 
-exports.findDataTable = (req, res) => {
-
-    // sample req
-    req.body = {
-        draw: "1",
-        columns: [
-            {
-                data: "name",
-                name: "",
-                searchable: "true",
-                orderable: "true",
-                search: {
-                    value: "",
-                    regex: "false",
-                },
-            },
-        ],
-        order: [
-            {
-                column: "0",
-                dir: "asc",
-            },
-        ],
-        start: "0",
-        length: "10",
-        search: {
-            value: "",
-            regex: "false",
-        },
-        _: "1478912938246",
-    };
-
-    datatables(Landmark, req.body).then((result) => {
-        res.json(result);
-    });
-};
 
 // Create
 exports.create = async (req, res) => {

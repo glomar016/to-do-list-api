@@ -1,6 +1,6 @@
 var router = require('express').Router();
 
-const terminalController = require('../controllers/Terminal.controller');
+const terminalController = require('../controllers/terminal.controller');
 
 router.post("/", terminalController.create);
 router.put("/:id", terminalController.update);

@@ -7,12 +7,9 @@ const jwt = require('jsonwebtoken');
 const userRoute = require('./src/routes/user.routes');
 const loginRoute = require('./src/routes/login.routes');
 const busInfoRoute = require('./src/routes/bus_information.routes');
-<<<<<<< HEAD
 const busTypeRoute = require('./src/routes/Bus_type.routes');
 const terminalRoute = require('./src/routes/Terminal.routes');
-=======
 const landmarkRoute = require('./src/routes/landmark.routes');
->>>>>>> f1606dfa56536452135b67dd530d4b22fb2a38b9
 
 var app = express();
 
@@ -73,19 +70,13 @@ const authenticateToken = (req, res, next) => {
 };
 
 // Routes
-<<<<<<< HEAD
-=======
-
-app.use(`${process.env.API_VERSION}/user`, authenticateToken, userRoute);
-app.use(`${process.env.API_VERSION}/bus_information`, authenticateToken, busInfoRoute);
-app.use(`${process.env.API_VERSION}/landmark`,authenticateToken,
- landmarkRoute);
->>>>>>> f1606dfa56536452135b67dd530d4b22fb2a38b9
 app.use(`${process.env.API_VERSION}/login`, loginRoute);
-app.use(`${process.env.API_VERSION}/bus_information`, busInfoRoute);
 app.use(`${process.env.API_VERSION}/user`, userRoute);
+
+app.use(`${process.env.API_VERSION}/bus_information`, busInfoRoute);
 app.use(`${process.env.API_VERSION}/bus_type`, busTypeRoute);
 app.use(`${process.env.API_VERSION}/terminal`, terminalRoute);
+app.use(`${process.env.API_VERSION}/landmark`, landmarkRoute);
 
 
 
