@@ -69,8 +69,9 @@ const authenticateToken = (req, res, next) => {
 // Routes
 
 app.use(`${process.env.API_VERSION}/user`, authenticateToken, userRoute);
+app.use(`${process.env.API_VERSION}/bus_information`, authenticateToken, busInfoRoute);
 app.use(`${process.env.API_VERSION}/login`, loginRoute);
-app.use(`${process.env.API_VERSION}/bus_information`, busInfoRoute);
+
 
 const PORT = process.env.PORT || 5000;
 
