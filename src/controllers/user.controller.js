@@ -45,7 +45,7 @@ exports.findDataTable = (req, res) => {
 exports.create = async (req, res) => {
     req.body.full_name = "";
     
-    req.body.created_by = req.user.id;
+    // req.body.created_by = req.user.id;
 
     req.body.password = await bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUND));
 
@@ -53,7 +53,7 @@ exports.create = async (req, res) => {
 
     User.create(req.body)
     .then((data) => {
-        User.findByPk(data.id, { include: ["createdBy"] }).then((result) => {
+        User.findByPk(data.id).then((result) => {
             res.send({
                 error: false,
                 data: result,
