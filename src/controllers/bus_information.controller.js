@@ -24,7 +24,7 @@ exports.create = async (req, res) => {
 
 // Retrive all 
 exports.findAll = (req, res) => {
-    busInformation.findAll({ where: { status: "Active"} })
+    busInformation.findAll()
     .then((data) => {
         res.send({
             error: false,
