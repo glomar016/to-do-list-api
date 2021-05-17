@@ -95,7 +95,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        denomiation: {
+        denomination: {
             type: DataTypes.STRING,
             allowNull: true,
         },
