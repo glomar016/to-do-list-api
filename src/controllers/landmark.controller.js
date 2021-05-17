@@ -1,63 +1,20 @@
 const e = require('express');
 const db = require('../models');
-const User = db.User;
+const Landmark = db.Landmark;
 const bcrypt = require("bcrypt");
 const datatables = require("sequelize-datatables");
 
-exports.findDataTable = (req, res) => {
-
-    // sample req
-    req.body = {
-        draw: "1",
-        columns: [
-            {
-                data: "full_name",
-                name: "",
-                searchable: "true",
-                orderable: "true",
-                search: {
-                    value: "",
-                    regex: "false",
-                },
-            },
-        ],
-        order: [
-            {
-                column: "0",
-                dir: "asc",
-            },
-        ],
-        start: "0",
-        length: "10",
-        search: {
-            value: "",
-            regex: "false",
-        },
-        _: "1478912938246",
-    };
-
-    datatables(User, req.body).then((result) => {
-        res.json(result);
-    });
-};
 
 // Create
 exports.create = async (req, res) => {
-    req.body.full_name = "";
-    
-    // req.body.created_by = req.user.id;
-
-    req.body.password = await bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUND));
-
-    console.log(req.body.password);
-
-    User.create(req.body)
+   
+    Landmark.create(req.body)
     .then((data) => {
-        User.findByPk(data.id).then((result) => {
+        Landmark.findByPk(data.id).then((result) => {
             res.send({
                 error: false,
                 data: result,
-                message: "User is created successfully."
+                message: "Landmark is created successfully."
             });
         });
     })
@@ -70,9 +27,9 @@ exports.create = async (req, res) => {
     });
 };
 
-// Retrive all 
+//Retrive all 
 exports.findAll = (req, res) => {
-    User.findAll({ where: { status: "Active"} })
+    Landmark.findAll({ where: { status: "Active"} })
     .then((data) => {
         res.send({
             error: false,
@@ -93,7 +50,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    User.findByPk(id)
+    Landmark.findByPk(id)
     .then((data) => {
         res.send({
             error: false,
@@ -114,23 +71,15 @@ exports.findOne = (req, res) => {
 exports.update = async (req, res) => {
     const id = req.params.id;
 
-    req.body.full_name = "";
-
-    if(req.body.password){
-        req.body.password = await bcrypt.hash(
-            req.body.password,
-            parseInt(process.env.SALT_ROUND)
-            );
-    }
-
-    User.update(req.body, {
+   
+    Landmark.update(req.body, {
         where: {id: id},
     })
     .then((result) =>{
         console.log(result);
         if(result) {
             // Success
-            User.findByPk(id).then((data) =>{
+            Landmark.findByPk(id).then((data) =>{
                 res.send({
                     error: false,
                     data: data,
@@ -156,19 +105,19 @@ exports.update = async (req, res) => {
     });
 };
 
-// Delete
+//Delete
 exports.delete = (req, res) => {
     const id = req.params.id;
     const body = { status: "Inactive" };
 
-    User.update(body, {
+    Landmark.update(body, {
         where: {id: id},
     })
     .then((result) =>{
         console.log(result);
         if(result) {
             // Success
-            User.findByPk(id).then((data) =>{
+            Landmark.findByPk(id).then((data) =>{
                 res.send({
                     error: false,
                     data: data,
@@ -193,3 +142,4 @@ exports.delete = (req, res) => {
         });
     });
 };
+
