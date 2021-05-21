@@ -5,7 +5,7 @@ const Terminal = db.Terminal;
 // Create
 exports.create = async (req, res) => {
     
-    // req.body.created_by = req.user.id;
+    // req.body.created_by = req.user.id
 
     Terminal.create(req.body)
     .then((data) => {
@@ -15,7 +15,7 @@ exports.create = async (req, res) => {
                 data: result,
                 message: "Terminal created successfully."
             });
-        });
+        })
     })
     .catch((err) => {
         res.status(500).send({
@@ -24,6 +24,7 @@ exports.create = async (req, res) => {
             message: err.errors.map((e) => e.message)
         })
     });
+
 };
 
 // Retrive all 

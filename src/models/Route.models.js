@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       
     // Default in every static associate
         this.belongsTo(models.User, {
+            as: "created",
             foreignKey: "created_by",
             type: DataTypes.UUID
         });

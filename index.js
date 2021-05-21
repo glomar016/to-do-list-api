@@ -7,9 +7,10 @@ const jwt = require('jsonwebtoken');
 const userRoute = require('./src/routes/user.routes');
 const loginRoute = require('./src/routes/login.routes');
 const busInfoRoute = require('./src/routes/bus_information.routes');
-const busTypeRoute = require('./src/routes/Bus_type.routes');
-const terminalRoute = require('./src/routes/Terminal.routes');
+const busTypeRoute = require('./src/routes/bus_type.routes');
+const terminalRoute = require('./src/routes/terminal.routes');
 const landmarkRoute = require('./src/routes/landmark.routes');
+const routeRoute = require('./src/routes/route.routes')
 
 var app = express();
 
@@ -77,6 +78,7 @@ app.use(`${process.env.API_VERSION}/bus_information`, busInfoRoute);
 app.use(`${process.env.API_VERSION}/bus_type`, busTypeRoute);
 app.use(`${process.env.API_VERSION}/terminal`, terminalRoute);
 app.use(`${process.env.API_VERSION}/landmark`, landmarkRoute);
+app.use(`${process.env.API_VERSION}/route`, routeRoute);
 
 
 
