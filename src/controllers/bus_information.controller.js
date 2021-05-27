@@ -25,16 +25,12 @@ exports.create = async (req, res) => {
 
 // Retrive all 
 exports.findAll = (req, res) => {
-<<<<<<< HEAD
-    busInformation.findAll()
-=======
     busInformation.findAll({ 
         include: ["busTypeId", "busTemplateId"], 
         where: { 
             status: "Active"
         } 
         })
->>>>>>> master
     .then((data) => {
         res.send({
             error: false,
