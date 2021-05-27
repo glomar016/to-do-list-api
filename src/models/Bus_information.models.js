@@ -19,11 +19,13 @@ module.exports = (sequelize, DataTypes) => {
 
         this.belongsTo(models.Bus_template, {
             foreignKey: "templatedId" ,
+            as: "busTemplateId",
             type: DataTypes.UUID
         });
 
         this.belongsTo(models.Bus_type, {
-            foreignKey: "typeId" ,
+            foreignKey: "typeId",
+            as: "busTypeId",
             type: DataTypes.UUID
         });
 

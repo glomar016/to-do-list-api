@@ -29,7 +29,12 @@ exports.create = async (req, res) => {
 // Read all
 exports.findAll = (req, res) => {
 
-    Fare.findAll( {where: {status: "Active"} })
+    Fare.findAll({ 
+        include: ["typeId"], 
+        where: { 
+            status: "Active"
+        } 
+        })
     .then((data) => {
         res.send({
             error: false,
