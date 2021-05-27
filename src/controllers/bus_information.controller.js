@@ -1,6 +1,7 @@
 const e = require('express');
 const db = require('../models');
 const busInformation = db.Bus_information;
+const Bus_type = db.Bus_type;
 
 // Create
 exports.create = async (req, res) => {
@@ -24,7 +25,16 @@ exports.create = async (req, res) => {
 
 // Retrive all 
 exports.findAll = (req, res) => {
+<<<<<<< HEAD
     busInformation.findAll()
+=======
+    busInformation.findAll({ 
+        include: ["busTypeId", "busTemplateId"], 
+        where: { 
+            status: "Active"
+        } 
+        })
+>>>>>>> master
     .then((data) => {
         res.send({
             error: false,
@@ -45,7 +55,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    busInformation.findByPk(id)
+    busInformation.findByPk(id, { include: ["busTypeId", "busTemplateId"]})
     .then((data) => {
         res.send({
             error: false,

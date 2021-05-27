@@ -1,20 +1,19 @@
 const e = require('express');
 const db = require('../models');
-const Terminal = db.Terminal;
+const Fare = db.Fare;
 
 // Create
 exports.create = async (req, res) => {
-    
-    // req.body.created_by = req.user.id
 
-    Terminal.create(req.body)
+    Fare.create(req.body)
     .then((data) => {
-        Terminal.findByPk(data.id, { include: ["created"] }).then((result) => {
+        Fare.findByPk(data.id)
+        .then((result) => {
             res.send({
                 error: false,
                 data: result,
-                message: "Terminal created successfully."
-            });
+                message: "Fare created successfully."
+            })
         })
     })
     .catch((err) => {
@@ -25,17 +24,23 @@ exports.create = async (req, res) => {
         })
     });
 
-};
+}
 
-// Retrive all 
+// Read all
 exports.findAll = (req, res) => {
-    Terminal.findAll({ where: { status: "Active"} })
+
+    Fare.findAll({ 
+        include: ["typeId"], 
+        where: { 
+            status: "Active"
+        } 
+        })
     .then((data) => {
         res.send({
             error: false,
             data: data,
-            message: "Retrived successfully."
-        });
+            message: "Data successfully retrieved."
+        })
     })
     .catch((err) => {
         res.status(500).send({
@@ -43,19 +48,20 @@ exports.findAll = (req, res) => {
             data: [],
             message: err.errors.map((e) => e.message)
         })
-    });
-};
+    })
+}
 
+// Get one
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Terminal.findByPk(id)
+    Fare.findByPk(id)
     .then((data) => {
         res.send({
             error: false,
             data: data,
-            message: "Success!"
-        });
+            message: "Data successfully retrieved"
+        })
     })
     .catch((err) => {
         res.status(500).send({
@@ -64,33 +70,32 @@ exports.findOne = (req, res) => {
             message: err.errors.map((e) => e.message)
         })
     })
-};
 
+}
+
+// Update
 exports.update = async (req, res) => {
+
     const id = req.params.id;
 
-    Terminal.update(req.body, {
-        where: {id: id},
-    })
-    .then((result) =>{
-        console.log(result);
-        if(result) {
-            // Success
-            Terminal.findByPk(id).then((data) =>{
+    Fare.update(req.body, { where: {id: id} })
+    .then((result) => {
+        if(result){
+            Fare.findByPk(id)
+            .then((data) => {
                 res.send({
                     error: false,
                     data: data,
-                    message: [process.env.SUCCESS_UPDATE],
-                });
-            });
+                    message: "Fare successfully updated."
+                })
+            })
         }
         else{
-            // if there is an error 
             res.status(500).send({
                 error: true,
                 data: [],
                 message: err.errors.map((e) => e.message)
-            });
+            })
         }
     })
     .catch((err) => {
@@ -98,37 +103,33 @@ exports.update = async (req, res) => {
             error: true,
             data: [],
             message: err.errors.map((e) => e.message)
-        });
-    });
-};
+        })
+    })
+}
 
 // Delete
 exports.delete = (req, res) => {
     const id = req.params.id;
-    const body = { status: "Inactive" };
+    const body = { status: "Inactive"};
 
-    Terminal.update(body, {
-        where: {id: id},
-    })
-    .then((result) =>{
-        console.log(result);
-        if(result) {
-            // Success
-            Terminal.findByPk(id).then((data) =>{
+    Fare.update(body, {where: {id: id} })
+    .then((result) => {
+        if(result){
+            Fare.findByPk(id)
+            .then((data) => {
                 res.send({
                     error: false,
                     data: data,
-                    message: [process.env.SUCCESS_UPDATE],
-                });
-            });
+                    message: "Fare successfully deleted."
+                })
+            })
         }
         else{
-            // if there is an error 
             res.status(500).send({
                 error: true,
                 data: [],
                 message: err.errors.map((e) => e.message)
-            });
+            })
         }
     })
     .catch((err) => {
@@ -136,6 +137,7 @@ exports.delete = (req, res) => {
             error: true,
             data: [],
             message: err.errors.map((e) => e.message)
-        });
-    });
-};
+        })
+    })
+
+}

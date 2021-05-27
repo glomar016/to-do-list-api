@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       
     // Default in every static associate
         this.belongsTo(models.User, {
+            as: "created",
             foreignKey: "created_by",
             type: DataTypes.UUID
         });
@@ -28,11 +29,13 @@ module.exports = (sequelize, DataTypes) => {
     // Add your additional association here
         this.belongsTo(models.Terminal , {
             foreignKey: "originId",
+            as: "origin",
             type: DataTypes.UUID
         });
 
         this.belongsTo(models.Terminal , {
             foreignKey: "destinationId",
+            as: "destination",
             type: DataTypes.UUID
         });
 

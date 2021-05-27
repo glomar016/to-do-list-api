@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     // Add your additional association here
         this.belongsTo(models.Bus_type, {
             foreignKey: "busTypeId",
+            as: "typeId",
             type: DataTypes.UUID
         });
     // End of your additional association 
