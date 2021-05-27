@@ -29,11 +29,13 @@ module.exports = (sequelize, DataTypes) => {
     // Add your additional association here
         this.belongsTo(models.Terminal , {
             foreignKey: "originId",
+            as: "origin",
             type: DataTypes.UUID
         });
 
         this.belongsTo(models.Terminal , {
             foreignKey: "destinationId",
+            as: "destination",
             type: DataTypes.UUID
         });
 

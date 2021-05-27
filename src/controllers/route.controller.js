@@ -31,7 +31,9 @@ const Route = db.Route;
     // Read all
     exports.findAll = (req, res) => {
 
-        Route.findAll({ where: {status: "Active"} })
+        Route.findAll({ 
+            include: ["origin", "destination"],
+            where: {status: "Active"} })
         .then((data) => {
             res.send({
                 error: false,
@@ -53,7 +55,10 @@ const Route = db.Route;
     exports.findOne = (req, res) => {
         const id = req.params.id;
 
-        Route.findByPk(id)
+        Route.findByPk(id,
+            {
+                include: ["origin", "destination"]
+            })
         .then((data) => {
             res.send({
                 error: false,
