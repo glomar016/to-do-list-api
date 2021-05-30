@@ -14,15 +14,12 @@ module.exports = (sequelize, DataTypes) => {
         this.belongsTo(models.User, {
             foreignKey: "updated_by",
             type: DataTypes.UUID
-        });
-        this.belongsTo(models.Schedule, {
-            foreignKey: "informationId",
-            type: DataTypes.UUID
-        });
+        });  
         this.belongsTo(models.Bus_information, {
-            foreignKey: "scheduleId",
+            foreignKey: "busInformationId",
+            as: "busInformation",
             type: DataTypes.UUID
-        });
+        }); 
     }
   }
   Bus_schedule.init(

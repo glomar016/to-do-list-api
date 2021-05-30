@@ -12,6 +12,7 @@ const terminalRoute = require('./src/routes/terminal.routes');
 const landmarkRoute = require('./src/routes/landmark.routes');
 const routeRoute = require('./src/routes/route.routes');
 const fareRoute = require('./src/routes/fare.routes');
+const busSchedRoute = require('./src/routes/bus_schedule.routes');
 
 var app = express();
 
@@ -74,14 +75,13 @@ const authenticateToken = (req, res, next) => {
 // Routes
 app.use(`${process.env.API_VERSION}/login`, loginRoute);
 app.use(`${process.env.API_VERSION}/user`, userRoute);
-
 app.use(`${process.env.API_VERSION}/bus_information`, busInfoRoute);
 app.use(`${process.env.API_VERSION}/bus_type`, busTypeRoute);
 app.use(`${process.env.API_VERSION}/terminal`, terminalRoute);
 app.use(`${process.env.API_VERSION}/landmark`, landmarkRoute);
 app.use(`${process.env.API_VERSION}/route`, routeRoute);
 app.use(`${process.env.API_VERSION}/fare`, fareRoute);
-
+app.use(`${process.env.API_VERSION}/bus_schedule`, busSchedRoute);
 
 
 const PORT = process.env.PORT || 5000;
