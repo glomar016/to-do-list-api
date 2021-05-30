@@ -12,6 +12,7 @@ const terminalRoute = require('./src/routes/terminal.routes');
 const landmarkRoute = require('./src/routes/landmark.routes');
 const routeRoute = require('./src/routes/route.routes');
 const fareRoute = require('./src/routes/fare.routes');
+const scheduleRoute = require('./src/routes/schedule.routes');
 
 var app = express();
 
@@ -81,6 +82,7 @@ app.use(`${process.env.API_VERSION}/terminal`, terminalRoute);
 app.use(`${process.env.API_VERSION}/landmark`, landmarkRoute);
 app.use(`${process.env.API_VERSION}/route`, routeRoute);
 app.use(`${process.env.API_VERSION}/fare`, fareRoute);
+app.use(`${process.env.API_VERSION}/schedule`, scheduleRoute);
 
 
 

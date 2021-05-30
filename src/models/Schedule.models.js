@@ -28,10 +28,12 @@ module.exports = (sequelize, DataTypes) => {
     // Add your additional association here
         this.belongsTo(models.Route, {
             foreignKey: "routeId",
+            as: "route",
             type: DataTypes.UUID
         });
         this.belongsTo(models.Bus_type, {
             foreignKey: "busTypeId",
+            as: "busType",
             type: DataTypes.UUID
         });
         
