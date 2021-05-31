@@ -12,11 +12,8 @@ const terminalRoute = require('./src/routes/terminal.routes');
 const landmarkRoute = require('./src/routes/landmark.routes');
 const routeRoute = require('./src/routes/route.routes');
 const fareRoute = require('./src/routes/fare.routes');
-<<<<<<< HEAD
 const busSchedRoute = require('./src/routes/bus_schedule.routes');
-=======
 const scheduleRoute = require('./src/routes/schedule.routes');
->>>>>>> jeffbranch
 
 var app = express();
 
@@ -85,12 +82,9 @@ app.use(`${process.env.API_VERSION}/terminal`, terminalRoute);
 app.use(`${process.env.API_VERSION}/landmark`, landmarkRoute);
 app.use(`${process.env.API_VERSION}/route`, routeRoute);
 app.use(`${process.env.API_VERSION}/fare`, fareRoute);
-<<<<<<< HEAD
 app.use(`${process.env.API_VERSION}/bus_schedule`, busSchedRoute);
-=======
 app.use(`${process.env.API_VERSION}/schedule`, scheduleRoute);
 
->>>>>>> jeffbranch
 
 
 const PORT = process.env.PORT || 5000;
