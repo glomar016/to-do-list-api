@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
             as: "busInformation",
             type: DataTypes.UUID
         }); 
+        this.belongsTo(models.Schedule, {
+            foreignKey: "busScheduleId",
+            as: "busSchedule",
+            type: DataTypes.UUID
+        }); 
     }
   }
   Bus_schedule.init(

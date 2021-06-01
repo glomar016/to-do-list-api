@@ -84,6 +84,10 @@ module.exports = (sequelize, DataTypes) => {
     
         // Add your additional columns here //
         
+        name: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         effectivityDate: {
             type: DataTypes.DATE(),
             allowNull: true,
