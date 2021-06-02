@@ -14,6 +14,7 @@ const routeRoute = require('./src/routes/route.routes');
 const fareRoute = require('./src/routes/fare.routes');
 const busSchedRoute = require('./src/routes/bus_schedule.routes');
 const scheduleRoute = require('./src/routes/schedule.routes');
+const busDriverRoute = require('./src/routes/bus_driver.routes');
 
 var app = express();
 
@@ -84,6 +85,7 @@ app.use(`${process.env.API_VERSION}/route`, routeRoute);
 app.use(`${process.env.API_VERSION}/fare`, fareRoute);
 app.use(`${process.env.API_VERSION}/bus_schedule`, busSchedRoute);
 app.use(`${process.env.API_VERSION}/schedule`, scheduleRoute);
+app.use(`${process.env.API_VERSION}/bus_driver`, busDriverRoute);
 
 
 
