@@ -9,7 +9,7 @@ exports.create = async (req, res) => {
 
     Bus_driver.create(req.body)
     .then((data) => {
-        Bus_driver.findByPk(data.id, { include: ["created"] }).then((result) => {
+        Bus_driver.findByPk(data.id).then((result) => {
             res.send({
                 error: false,
                 data: result,
