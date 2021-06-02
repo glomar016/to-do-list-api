@@ -3,7 +3,7 @@ const db = require('../models');
 const Insurance = db.Insurance;
 
 // Create
-exports.create = async (req, res) => {
+exports.create = async (req, res) => {  
     
     // req.body.created_by = req.user.id
 
@@ -46,6 +46,7 @@ exports.findAll = (req, res) => {
     });
 };
 
+//Retrieve only one
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -66,6 +67,7 @@ exports.findOne = (req, res) => {
     })
 };
 
+//Update data
 exports.update = async (req, res) => {
     const id = req.params.id;
 
@@ -102,7 +104,7 @@ exports.update = async (req, res) => {
     });
 };
 
-// Delete
+// Delete (Soft delete = Change status to "Inactive")
 exports.delete = (req, res) => {
     const id = req.params.id;
     const body = { status: "Inactive" };
