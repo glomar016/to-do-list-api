@@ -9,7 +9,7 @@ exports.create = async (req, res) => {
 
     Insurance.create(req.body)
     .then((data) => {
-        Insurance.findByPk(data.id, { include: ["created"] }).then((result) => {
+        Insurance.findByPk(data.id).then((result) => {
             res.send({
                 error: false,
                 data: result,
