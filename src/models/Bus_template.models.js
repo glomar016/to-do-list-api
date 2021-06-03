@@ -77,21 +77,21 @@ module.exports = (sequelize, DataTypes) => {
         // Add your additional columns here 
         seat: {
             type: DataTypes.STRING(255),
-            validate: {
+            //validate: {
                 allowNull: true,         // if column cannot be null
-            }
+            //}
         },
         column: {
             type: DataTypes.STRING(255),
-            validate: {
+            //validate: {
                 allowNull: true,   
-            }      
+            //}      
         },
         row: {
             type: DataTypes.STRING(255),
-            validate: {
+            //validate: {
                 allowNull: true,  
-            }       
+            //}       
         },
         // End of additional columns 
     },
