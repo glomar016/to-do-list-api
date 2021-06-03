@@ -9,7 +9,7 @@ exports.create = async (req, res) => {
 
     Reservation_line.create(req.body)
     .then((data) => {
-        Reservation_line.findByPk(data.id, { include: ["created"] }).then((result) => {
+        Reservation_line.findByPk(data.id).then((result) => {
             res.send({
                 error: false,
                 data: result,
