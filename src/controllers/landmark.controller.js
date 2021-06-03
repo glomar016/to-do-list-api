@@ -29,7 +29,9 @@ exports.create = async (req, res) => {
 
 //Retrive all 
 exports.findAll = (req, res) => {
-    Landmark.findAll({ where: { status: "Active"} })
+    const id = req.params.id;
+    
+    Landmark.findAll({ where: { status: "Active", routeId: id} })
     .then((data) => {
         res.send({
             error: false,
