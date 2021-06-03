@@ -19,6 +19,8 @@ const insuranceRoute = require('./src/routes/insurance.routes');
 const promoRoute = require('./src/routes/promo.routes');
 const systemConfigRoute = require('./src/routes/system_config.routes');
 const counterRoute = require('./src/routes/counter.routes');
+const reservationRoute = require('./src/routes/reservation.routes');
+const reservation_LineRoute = require('./src/routes/reservation_Line.routes');
 var app = express();
 
 app.use(express.json());
@@ -93,6 +95,9 @@ app.use(`${process.env.API_VERSION}/insurance`, insuranceRoute);
 app.use(`${process.env.API_VERSION}/promo`, promoRoute);
 app.use(`${process.env.API_VERSION}/system_config`, systemConfigRoute);
 app.use(`${process.env.API_VERSION}/counter`, counterRoute);
+app.use(`${process.env.API_VERSION}/reservation`, reservationRoute);
+app.use(`${process.env.API_VERSION}/reservation_line`, reservation_LineRoute);
+
 
 const PORT = process.env.PORT || 5000;
 
