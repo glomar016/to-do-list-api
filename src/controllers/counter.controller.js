@@ -9,7 +9,7 @@ exports.create = async (req, res) => {
 
     counter.create(req.body)
     .then((data) => {
-        counter.findByPk(data.id, { include: ["created"] }).then((result) => {
+        counter.findByPk(data.id).then((result) => {
             res.send({
                 error: false,
                 data: result,
