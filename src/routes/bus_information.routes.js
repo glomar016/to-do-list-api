@@ -7,5 +7,6 @@ router.put("/:id", busInformation.update);
 router.get("/", busInformation.findAll);
 router.get("/:id", busInformation.findOne);
 router.delete("/:id", busInformation.delete);
+router.get("/reqBusType/:reqBusType", busInformation.findSpecificBusType);
 
 module.exports = router;
