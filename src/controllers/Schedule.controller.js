@@ -48,6 +48,35 @@ exports.findAll = (req, res) => {
     });
 };
 
+ // Retrieve all available bus
+ exports.findAllAvailBus = async (req, res) => {
+    let selectedDay = req.params.selectedDay;
+    selectedDay.toLowerCase();
+    console.log(selectedDay);
+ 
+    Schedule.findAll({ 
+        include: ["busType", "route"], 
+        where: { 
+            status: "Active",
+            [selectedDay]: "True"
+        } 
+        })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Retrieved successfully."
+        });
+    })
+    .catch((err) => {
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+};
+
 // Find a single
 exports.findOne = (req, res) => {
     const id = req.params.id;

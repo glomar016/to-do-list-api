@@ -135,3 +135,24 @@ exports.delete = (req, res) => {
         });
     });
 };
+
+
+exports.findSpecificBusType = (req, res) => {
+    let reqBusType = req.params.reqBusType;
+    
+    busInformation.findAll({  include: ["busTypeId", "busTemplateId"], where: { status: "Active", typeId: reqBusType} })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Retrived successfully."
+        });
+    })
+    .catch((err) => {
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+};
