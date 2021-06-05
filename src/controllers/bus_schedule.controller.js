@@ -46,6 +46,7 @@ exports.findAll = async (req, res) => {
     });
 };
 
+
 // Find a single
 exports.findOne = async (req, res) => {
     const id = req.params.id;
@@ -132,4 +133,6 @@ exports.delete = (req, res) => {
             message: err.errors.map((e) => e.message)
         });
     });
+
+
 };
