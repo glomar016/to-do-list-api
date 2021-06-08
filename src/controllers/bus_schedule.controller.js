@@ -25,9 +25,40 @@ exports.create = (req, res) => {
 // Retrieve all 
 exports.findAll = async (req, res) => {
     busSchedule.findAll({ 
-        include: ["busInformation"], 
+        include: ["busInformation", "busSchedule"], 
         where: { 
             status: "Active"
+        } 
+        })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Retrieved successfully."
+        });
+    })
+    .catch((err) => {
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+};
+
+// Retrieve all 
+exports.findAllAvailable = async (req, res) => {
+    routeId = req.params.routeId
+    typeId = req.params.typeId
+    date = req.params.date
+
+    busSchedule.findAll({ 
+        include: ["busInformation", "busSchedule"], 
+        where: { 
+            status: "Active",
+            scheduleDate: date,
+            '$busSchedule.routeId$': routeId,
+            '$busSchedule.busTypeId$': typeId,
         } 
         })
     .then((data) => {
