@@ -27,7 +27,8 @@ exports.create = async (req, res) => {
 
 //Retrive all 
 exports.findAll = (req, res) => {
-    Promo.findAll({ where: { status: "Active"} })
+    Promo.findAll({ include: ["busType"], 
+    where: { status: "Active"} })
     .then((data) => {
         res.send({
             error: false,
@@ -48,7 +49,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Promo.findByPk(id)
+    Promo.findByPk(id ,{include: ["busType"]})
     .then((data) => {
         res.send({
             error: false,

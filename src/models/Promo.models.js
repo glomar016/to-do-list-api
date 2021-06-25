@@ -15,7 +15,11 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: "updated_by",
             type: DataTypes.UUID
         });
-        
+        this.belongsTo(models.Bus_type, {
+            foreignKey: "busTypeId",
+            as: "busType",
+            type: DataTypes.UUID
+        });       
     }
   }
   Promo.init(
