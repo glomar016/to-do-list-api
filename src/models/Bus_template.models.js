@@ -75,6 +75,13 @@ module.exports = (sequelize, DataTypes) => {
         },
     
         // Add your additional columns here 
+        name: {
+            type: DataTypes.STRING(255),
+            //validate: {
+                allowNull: true,         // if column cannot be null
+            //}
+        },
+        // Add your additional columns here 
         seat: {
             type: DataTypes.STRING(255),
             //validate: {
