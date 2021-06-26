@@ -141,3 +141,30 @@ exports.delete = (req, res) => {
     })
 
 }
+
+
+// Get one
+exports.get_specific_fare = (req, res) => {
+    const id = req.params.id;
+
+    Fare.findAll({
+        where: {
+            status: "Active", busTypeId: id
+        }
+    })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Data successfully retrieved"
+        })
+    })
+    .catch((err) => {
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    })
+
+}

@@ -9,7 +9,17 @@ exports.create = async (req, res) => {
 
     Payment.create(req.body)
     .then((data) => {
-        Payment.findByPk(data.id).then((result) => {
+        Payment.findAll({
+            include: [{
+                model: db.Reservation,
+                as: "reservation"
+            }
+        ], 
+        where: {
+            id: data.id
+        }
+        })
+        .then((result) => {
             res.send({
                 error: false,
                 data: result,
@@ -29,7 +39,12 @@ exports.create = async (req, res) => {
 
 // Retrive all 
 exports.findAll = (req, res) => {
-    Payment.findAll({ where: { status: "Active"} })
+    Payment.findAll({
+        include: [{
+            model: db.Reservation,
+            as: "reservation"
+        }],
+        where: { status: "Active"} })
     .then((data) => {
         res.send({
             error: false,
