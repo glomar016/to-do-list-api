@@ -60,8 +60,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notNull: { msg: "Terminal Name is required." },
-                notEmpty: { msg: "Terminal Name should not be empty." },
+                notNull: { msg: "Counter Name is required." },
+                notEmpty: { msg: "Counter Name should not be empty." },
               },
             },
         

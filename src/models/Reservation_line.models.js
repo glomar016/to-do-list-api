@@ -23,13 +23,6 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.UUID
       });
 
-      
-
-      this.belongsTo(models.Landmark, {
-          foreignKey: "passengerLandmarkId",
-          type: DataTypes.UUID,
-      });
-
       this.belongsTo(models.Bus_seat, {
         foreignKey: "seatId",
         type: DataTypes.UUID,
@@ -37,6 +30,11 @@ module.exports = (sequelize, DataTypes) => {
 
       this.belongsTo(models.Landmark, {
         foreignKey: "landmarkId",
+        type: DataTypes.UUID,
+      });
+      
+      this.belongsTo(models.Route, {
+        foreignKey: "routeId",
         type: DataTypes.UUID,
       });
 

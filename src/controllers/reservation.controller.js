@@ -29,7 +29,31 @@ exports.create = async (req, res) => {
 
 // Retrive all 
 exports.findAll = (req, res) => {
-    Reservation.findAll({ where: { status: "Active"} })
+    Reservation.findAll({ 
+        include: [{
+            model: db.Schedule,
+            as: "schedule",
+            include: [{
+                model: db.Route,
+                as: "route",
+                include: [
+                    {
+                        model: db.Terminal,
+                        as: "origin"
+                    },
+                    {
+                        model: db.Terminal,
+                        as: "destination"
+                    }
+                ]
+            }]
+        }],
+        include: [{
+            model: db.Promo,
+            as: "promo",
+        }],
+        where: { status: "Active"} 
+    })
     .then((data) => {
         res.send({
             error: false,

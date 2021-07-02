@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         
         this.belongsTo(models.Reservation, {
             foreignKey: "reservationId",
+            as: "reservation",
             type: DataTypes.UUID
         });
 
@@ -95,11 +96,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         refundReason: {
             type: DataTypes.STRING(255),
-            allowNull: false,
-            validate: {
-                notEmpty: { msg: "Refund reason is required."},
-                notNull: { msg: "Refund reason should not be null."},
-            },
+            allowNull: true,
         },
         cancelReason: {
             type: DataTypes.STRING(255),

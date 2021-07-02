@@ -3,6 +3,7 @@ const db = require('../models');
 const Schedule = db.Schedule;
 const Bus_type = db.Bus_type;
 const Route = db.Route;
+const Terminal = db.Terminal;
 
 // Create
 exports.create = async (req, res) => {
@@ -55,7 +56,21 @@ exports.findAll = (req, res) => {
     console.log(selectedDay);
  
     Schedule.findAll({ 
-        include: ["busType", "route"], 
+        include: [{
+            model: db.Route,
+            as: "route",
+            include: {
+                model: Terminal,
+                as: "origin",
+            }
+        },
+        {
+            model: Bus_type,
+            as: "busType",
+        }
+        ],
+
+        // include: ["busType", "route"], 
         where: { 
             status: "Active",
             [selectedDay]: "True"
@@ -69,6 +84,7 @@ exports.findAll = (req, res) => {
         });
     })
     .catch((err) => {
+        console.log(err);
         res.status(500).send({
             error: true,
             data: [],
@@ -163,5 +179,47 @@ exports.delete = (req, res) => {
             data: [],
             message: err.errors.map((e) => e.message)
         });
+    });
+};
+
+
+exports.get_specific_schedule = async (req, res) => {
+    const id = req.params.id;
+ 
+    Schedule.findAll({ 
+        include: [{
+            model: db.Route,
+            as: "route",
+            include: {
+                model: db.Terminal,
+                as: "origin",
+            }
+        },
+        {
+            model: db.Bus_type,
+            as: "busType",
+        },
+        ],
+
+        // include: ["busType", "route"], 
+        where: { 
+            status: "Active",
+            id: id
+        } 
+        })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Retrieved successfully."
+        });
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
     });
 };

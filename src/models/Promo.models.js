@@ -43,15 +43,11 @@ module.exports = (sequelize, DataTypes) => {
                 key: "id"
             }
         },
-     
+    
         code: {
             type: DataTypes.STRING(500),
             allowNull: true, 
         }, 
-        busTypeId: {
-            type: DataTypes.UUID(255),
-            allowNull: true, 
-        },
         fixedDiscount: {
             type: DataTypes.STRING (500),
             allowNull: true, 
