@@ -48,6 +48,10 @@ exports.findAll = (req, res) => {
                 ]
             }]
         }],
+        include: [{
+            model: db.Promo,
+            as: "promo",
+        }],
         where: { status: "Active"} 
     })
     .then((data) => {

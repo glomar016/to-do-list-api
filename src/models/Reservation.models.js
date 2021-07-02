@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
 
         this.belongsTo(models.Promo , {
             foreignKey: "promoId",
+            as: "promo",
             type: DataTypes.UUID
         });
 
