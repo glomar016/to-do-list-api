@@ -1,6 +1,6 @@
 const e = require('express');
 const db = require('../models');
-const counter = db.counter;
+const counter = db.Counter;
 
 // Create
 exports.create = async (req, res) => {

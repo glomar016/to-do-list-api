@@ -1,6 +1,11 @@
 const e = require('express');
 const db = require('../models');
 const busSchedule = db.Bus_schedule;
+const busInformation = db.Bus_information;
+const Schedule = db.Schedule;
+const Bus_type = db.Bus_type;
+const Route = db.Route;
+const Terminal = db.Terminal;
 
 // Create
 exports.create = (req, res) => {
@@ -25,9 +30,65 @@ exports.create = (req, res) => {
 // Retrieve all 
 exports.findAll = async (req, res) => {
     busSchedule.findAll({ 
-        include: ["busInformation"], 
+        include: [{
+            model: Schedule,
+            as : "busSchedule",
+            include: {
+                model: Route,
+                as: "route",
+                include: [{
+                    model: Terminal,
+                    as: "origin"
+                },
+                {
+                    model: Terminal,
+                    as: "destination"
+                }]
+            }
+        },
+        {
+            model: busInformation,
+            as : "busInformation",
+            include: {
+                model: Bus_type,
+                as: "busTypeId"
+            }
+        },
+        ], 
         where: { 
             status: "Active"
+        } 
+        })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Retrieved successfully."
+        });
+    })
+    .catch((err) => {
+        console.log(err)
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+};
+
+// Retrieve all 
+exports.findAllAvailable = async (req, res) => {
+    routeId = req.params.routeId
+    typeId = req.params.typeId
+    date = req.params.date
+
+    busSchedule.findAll({ 
+        include: ["busInformation", "busSchedule"], 
+        where: { 
+            status: "Active",
+            scheduleDate: date,
+            '$busSchedule.routeId$': routeId,
+            '$busSchedule.busTypeId$': typeId,
         } 
         })
     .then((data) => {

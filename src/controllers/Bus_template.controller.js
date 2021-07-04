@@ -29,7 +29,10 @@ exports.create = async (req, res) => {
 
 // Retrive all 
 exports.findAll = (req, res) => {
-    Bus_template.findAll({ where: { status: "Active"} })
+    Bus_template.findAll({ 
+        include: ["busType"],
+        where: { status: "Active"} 
+    })
     .then((data) => {
         res.send({
             error: false,

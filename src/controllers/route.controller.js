@@ -51,6 +51,30 @@ const Route = db.Route;
 
     };
 
+    //Find specific origin
+    exports.findAllOrigin = (req, res) => {
+        const originId = req.params.originId
+
+        Route.findAll({ 
+            include: ["origin", "destination"],
+            where: {status: "Active", originId: originId } })
+        .then((data) => {
+            res.send({
+                error: false,
+                data: data,
+                message: "Retrieved data successfully"
+            });
+        })
+        .catch((err) => {
+            res.status(500).send({
+                error: true,
+                data: [],
+                message: err.errors.map((e) => e.message)
+            });
+        })
+
+    };
+
     // Read one
     exports.findOne = (req, res) => {
         const id = req.params.id;

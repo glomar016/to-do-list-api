@@ -70,7 +70,7 @@ exports.update = async (req, res) => {
     const id = req.params.id;
 
     Chart_of_account.update(req.body, {
-        where: {id: id},
+        where: { id: id },
     })
     .then((result) =>{
         console.log(result);

@@ -1,6 +1,6 @@
 var router = require('express').Router();
 
-const counterController = require('../controllers/terminal.controller');
+const counterController = require('../controllers/counter.controller');
 
 router.post("/", counterController.create);
 router.put("/:id", counterController.update);

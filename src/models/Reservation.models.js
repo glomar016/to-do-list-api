@@ -30,11 +30,13 @@ module.exports = (sequelize, DataTypes) => {
     
         this.belongsTo(models.Schedule , {
             foreignKey: "scheduleId",
+            as: "schedule",
             type: DataTypes.UUID
         });
 
         this.belongsTo(models.Promo , {
             foreignKey: "promoId",
+            as: "promo",
             type: DataTypes.UUID
         });
 
@@ -84,6 +86,11 @@ module.exports = (sequelize, DataTypes) => {
         // Add your additional columns here 
         name: {
             type: DataTypes.STRING(500),
+            allowNull: true, 
+        }, 
+
+        reservationDate: {
+            type: DataTypes.DATE,
             allowNull: true, 
         }, 
 
