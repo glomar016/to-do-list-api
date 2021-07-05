@@ -141,3 +141,29 @@ exports.delete = (req, res) => {
         });
     });
 };
+
+exports.findOnePromo = (req, res) => {
+    const promoCode = req.params.promoCode;
+
+    Promo.findOne({ 
+        where: { 
+            code: promoCode,
+            status: "Active"
+        } 
+    })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Promo retrived successfully."
+        });
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+};
