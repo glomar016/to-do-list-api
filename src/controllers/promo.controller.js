@@ -27,7 +27,8 @@ exports.create = async (req, res) => {
 
 //Retrive all 
 exports.findAll = (req, res) => {
-    Promo.findAll({ where: { status: "Active"} })
+    Promo.findAll({ include: ["busType"], 
+    where: { status: "Active"} })
     .then((data) => {
         res.send({
             error: false,
@@ -48,7 +49,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Promo.findByPk(id)
+    Promo.findByPk(id ,{include: ["busType"]})
     .then((data) => {
         res.send({
             error: false,
@@ -138,5 +139,31 @@ exports.delete = (req, res) => {
             data: [],
             message: err.errors.map((e) => e.message)
         });
+    });
+};
+
+exports.findOnePromo = (req, res) => {
+    const promoCode = req.params.promoCode;
+
+    Promo.findOne({ 
+        where: { 
+            code: promoCode,
+            status: "Active"
+        } 
+    })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Promo retrived successfully."
+        });
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
     });
 };
