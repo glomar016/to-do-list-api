@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     // Add your additional association here
         this.belongsTo(models.Bus_information , {
             foreignKey: "informationId",
+            as: "busInformation",
             type: DataTypes.UUID
         });
 
@@ -73,6 +74,11 @@ module.exports = (sequelize, DataTypes) => {
         registrationStatus: {
             type: DataTypes.STRING(255),
             allowNull: true,
+        },
+
+        expirationDate:  {
+            type: DataTypes.DATE,
+            allowNull: true, 
         },
 
         // End of additional columns 
