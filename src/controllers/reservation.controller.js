@@ -46,12 +46,13 @@ exports.findAll = (req, res) => {
                         as: "destination"
                     }
                 ]
-            }]
-        }],
-        include: [{
+            }],
+        },
+        {
             model: db.Promo,
             as: "promo",
-        }],
+        }    
+        ],
         where: { status: "Active"} 
     })
     .then((data) => {
@@ -62,6 +63,7 @@ exports.findAll = (req, res) => {
         });
     })
     .catch((err) => {
+        console.log(err)
         res.status(500).send({
             error: true,
             data: [],

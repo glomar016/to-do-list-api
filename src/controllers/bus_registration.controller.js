@@ -1,40 +1,20 @@
 const e = require('express');
 const db = require('../models');
-const Reservation_line = db.Reservation_line;
+const Bus_registration = db.Bus_registration;
 
 // Create
 exports.create = async (req, res) => {
     
-    // req.body.created_by = req.user.id
+    // req.body.created_by = req.user.id;
 
-    Reservation_line.create(req.body)
+    Bus_registration.create(req.body)
     .then((data) => {
-        Reservation_line.findByPk(data.id).then((result) => {
+        Bus_registration.findByPk(data.id).then((result) => {
             res.send({
                 error: false,
                 data: result,
-                message: "Reservation_line created successfully."
+                message: "Bus Registration created successfully."
             });
-        })
-    })
-    .catch((err) => {
-        res.status(500).send({
-            error: true,
-            data: [],
-            message: err.errors.map((e) => e.message)
-        })
-    });
-
-};
-
-// Retrive all 
-exports.findAll = (req, res) => {
-    Reservation_line.findAll({ where: { status: "Active"} })
-    .then((data) => {
-        res.send({
-            error: false,
-            data: data,
-            message: "Retrived successfully."
         });
     })
     .catch((err) => {
@@ -46,10 +26,32 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Retrive all 
+exports.findAll = (req, res) => {
+    Bus_registration.findAll({ 
+        include: ["busInformation"],
+        where: { status: "Active"} })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Retrived successfully."
+        });
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+};
+
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Reservation_line.findByPk(id)
+    Bus_registration.findByPk(id, {include: ["busInformation"]})
     .then((data) => {
         res.send({
             error: false,
@@ -69,14 +71,14 @@ exports.findOne = (req, res) => {
 exports.update = async (req, res) => {
     const id = req.params.id;
 
-    Reservation_line.update(req.body, {
+    Bus_registration.update(req.body, {
         where: {id: id},
     })
     .then((result) =>{
         console.log(result);
         if(result) {
             // Success
-            Reservation_line.findByPk(id).then((data) =>{
+            Bus_registration.findByPk(id).then((data) =>{
                 res.send({
                     error: false,
                     data: data,
@@ -107,14 +109,14 @@ exports.delete = (req, res) => {
     const id = req.params.id;
     const body = { status: "Inactive" };
 
-    Reservation_line.update(body, {
+    Bus_registration.update(body, {
         where: {id: id},
     })
     .then((result) =>{
         console.log(result);
         if(result) {
             // Success
-            Reservation_line.findByPk(id).then((data) =>{
+            Bus_registration.findByPk(id).then((data) =>{
                 res.send({
                     error: false,
                     data: data,
@@ -138,29 +140,4 @@ exports.delete = (req, res) => {
             message: err.errors.map((e) => e.message)
         });
     });
-};
-
-// Create
-exports.bulkCreate = async (req, res) => {
-    
-    // req.body.created_by = req.user.id
-
-    Reservation_line.bulkCreate(req.body)
-    .then((data) => {
-        Reservation_line.findAll(data.id).then((result) => {
-            res.send({
-                error: false,
-                data: result,
-                message: "Reservation_line created successfully."
-            });
-        })
-    })
-    .catch((err) => {
-        res.status(500).send({
-            error: true,
-            data: [],
-            message: err.errors.map((e) => e.message)
-        })
-    });
-
 };

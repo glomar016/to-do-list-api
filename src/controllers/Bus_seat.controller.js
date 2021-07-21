@@ -1,19 +1,19 @@
 const e = require('express');
 const db = require('../models');
-const Reservation_line = db.Reservation_line;
+const Bus_seat = db.Bus_seat;
 
 // Create
 exports.create = async (req, res) => {
     
     // req.body.created_by = req.user.id
 
-    Reservation_line.create(req.body)
+    Bus_seat.create(req.body)
     .then((data) => {
-        Reservation_line.findByPk(data.id).then((result) => {
+        Bus_seat.findByPk(data.id).then((result) => {
             res.send({
                 error: false,
                 data: result,
-                message: "Reservation_line created successfully."
+                message: "Bus_seat created successfully."
             });
         })
     })
@@ -29,7 +29,16 @@ exports.create = async (req, res) => {
 
 // Retrive all 
 exports.findAll = (req, res) => {
-    Reservation_line.findAll({ where: { status: "Active"} })
+    Bus_seat.findAll({ 
+         include: [{
+                model: db.Bus_template,
+                as: "template"}
+        ],
+        where: { status: "Active", busInformationId: req.params.id},
+        order: [
+            ['sortNumber', 'ASC'],
+        ]
+    })
     .then((data) => {
         res.send({
             error: false,
@@ -38,6 +47,7 @@ exports.findAll = (req, res) => {
         });
     })
     .catch((err) => {
+        console.log(err)
         res.status(500).send({
             error: true,
             data: [],
@@ -49,7 +59,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Reservation_line.findByPk(id)
+    Bus_seat.findByPk(id)
     .then((data) => {
         res.send({
             error: false,
@@ -69,14 +79,14 @@ exports.findOne = (req, res) => {
 exports.update = async (req, res) => {
     const id = req.params.id;
 
-    Reservation_line.update(req.body, {
+    Bus_seat.update(req.body, {
         where: {id: id},
     })
     .then((result) =>{
         console.log(result);
         if(result) {
             // Success
-            Reservation_line.findByPk(id).then((data) =>{
+            Bus_seat.findByPk(id).then((data) =>{
                 res.send({
                     error: false,
                     data: data,
@@ -107,14 +117,14 @@ exports.delete = (req, res) => {
     const id = req.params.id;
     const body = { status: "Inactive" };
 
-    Reservation_line.update(body, {
+    Bus_seat.update(body, {
         where: {id: id},
     })
     .then((result) =>{
         console.log(result);
         if(result) {
             // Success
-            Reservation_line.findByPk(id).then((data) =>{
+            Bus_seat.findByPk(id).then((data) =>{
                 res.send({
                     error: false,
                     data: data,
@@ -140,18 +150,15 @@ exports.delete = (req, res) => {
     });
 };
 
-// Create
-exports.bulkCreate = async (req, res) => {
+exports.createBusSeats = (req, res) => {
     
-    // req.body.created_by = req.user.id
-
-    Reservation_line.bulkCreate(req.body)
+    Bus_seat.bulkCreate(req.body)
     .then((data) => {
-        Reservation_line.findAll(data.id).then((result) => {
+        Bus_seat.findAll(data.id).then((result) => {
             res.send({
                 error: false,
                 data: result,
-                message: "Reservation_line created successfully."
+                message: "Bus_seat created successfully."
             });
         })
     })
@@ -162,5 +169,55 @@ exports.bulkCreate = async (req, res) => {
             message: err.errors.map((e) => e.message)
         })
     });
+}
 
+exports.createBusInformationSeats = (req, res) => {
+    
+    Bus_seat.bulkCreate(req.body)
+    .then((data) => {
+        Bus_seat.findAll(data.id).then((result) => {
+            res.send({
+                error: false,
+                data: result,
+                message: "Bus_seat created successfully."
+            });
+        })
+    })
+    .catch((err) => {
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+}
+
+exports.findAllTemplate = (req, res) => {
+    
+
+    Bus_seat.findAll({ 
+         include: [{
+                model: db.Bus_template,
+                as: "template"}
+        ],
+        where: { status: "Active", templateId: req.params.id},
+        order: [
+            ['sortNumber', 'ASC'],
+        ]
+    })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Retrived successfully."
+        });
+    })
+    .catch((err) => {
+        console.log(err)
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
 };

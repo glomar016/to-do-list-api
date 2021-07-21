@@ -10,11 +10,13 @@ exports.create = async (req, res) => {
   busInformation
     .create(req.body)
     .then((data) => {
-      res.send({
-        error: false,
-        data: data,
-        message: ["Bus information is created successfully."],
-      });
+      busInformation.findByPk(data.id, { include: ["busTypeId", "busTemplateId"] }).then((result) => {
+            res.send({
+                error: false,
+                data: result,
+                message: "Bus information created successfully."
+            });
+      })
     })
     .catch((err) => {
       res.status(500).send({

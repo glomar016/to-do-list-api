@@ -72,6 +72,10 @@ module.exports = (sequelize, DataTypes) => {
         // Add your additional columns here 
   
         // Could be driver or conductor
+        name: {
+            type: DataTypes.STRING(255),
+            allowNull: true, 
+        },
         type: {
             type: DataTypes.STRING(255),
             allowNull: true, 
