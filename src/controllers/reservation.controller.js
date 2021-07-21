@@ -51,8 +51,7 @@ exports.findAll = (req, res) => {
         {
             model: db.Promo,
             as: "promo",
-        }    
-        ],
+        }],
         where: { status: "Active"} 
     })
     .then((data) => {

@@ -40,10 +40,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID
         });
 
-        this.hasMany(models.Reservation_line, {
-            foreignKey: "reservationId",
-            type: DataTypes.UUID,
-        });
+        
 
     // End of your additional association 
     }
@@ -85,6 +82,11 @@ module.exports = (sequelize, DataTypes) => {
     
         // Add your additional columns here 
         name: {
+            type: DataTypes.STRING(500),
+            allowNull: true, 
+        }, 
+        
+        scheduleName: {
             type: DataTypes.STRING(500),
             allowNull: true, 
         }, 

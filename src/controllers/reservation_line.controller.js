@@ -1,6 +1,7 @@
 const e = require('express');
 const db = require('../models');
 const Reservation_line = db.Reservation_line;
+const Reservation = db.Reservation;
 
 // Create
 exports.create = async (req, res) => {
@@ -18,6 +19,7 @@ exports.create = async (req, res) => {
         })
     })
     .catch((err) => {
+        console.log(err)
         res.status(500).send({
             error: true,
             data: [],
@@ -29,7 +31,39 @@ exports.create = async (req, res) => {
 
 // Retrive all 
 exports.findAll = (req, res) => {
-    Reservation_line.findAll({ where: { status: "Active"} })
+    Reservation_line.findAll({
+        include: [{
+            model: db.Reservation,
+            as: "reservation",
+            include: [{
+                model: db.Schedule,
+                as: "schedule",
+                include: [{
+                    model: db.Route,
+                    as: "route",
+                    include: [
+                        {
+                            model: db.Terminal,
+                            as: "origin"
+                        },
+                        {
+                            model: db.Terminal,
+                            as: "destination"
+                        }
+                    ]
+                }],
+            },
+            {
+                model: db.Promo,
+                as: "promo",
+            }],
+        },
+        {
+            model: db.Bus_seat,
+            as: "seat",
+        }
+        ],
+        where: { status: "Active", reservationId: req.params.id} })
     .then((data) => {
         res.send({
             error: false,
@@ -38,6 +72,7 @@ exports.findAll = (req, res) => {
         });
     })
     .catch((err) => {
+        console.log(err)
         res.status(500).send({
             error: true,
             data: [],
