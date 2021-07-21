@@ -28,25 +28,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
       });
 
-      this.belongsTo(models.Landmark, {
-        foreignKey: "landmarkId",
-        type: DataTypes.UUID,
-      });
-      
-      this.belongsTo(models.Route, {
-        foreignKey: "routeId",
-        type: DataTypes.UUID,
-      });
-
       this.belongsTo(models.Insurance, {
         foreignKey: "insuranceId",
         type: DataTypes.UUID,
       });
 
-      this.belongsTo(models.Fare, {
-        foreignKey: "fareId",
-        type: DataTypes.UUID,
-      });
     }
   };
   Reservation_line.init({
@@ -87,6 +73,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
     },
     insuranceFee: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    amount: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    route: {
         type: DataTypes.STRING,
         allowNull: true,
     },

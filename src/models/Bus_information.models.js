@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         });
 
         this.belongsTo(models.Bus_template, {
-            foreignKey: "templatedId" ,
+            foreignKey: "templateId" ,
             as: "busTemplateId",
             type: DataTypes.UUID
         });

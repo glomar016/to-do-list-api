@@ -25,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID
         });
 
-
     // Add your additional association here
         this.belongsTo(models.Bus_type, {
             foreignKey: "typeId",
@@ -33,10 +32,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID
         });
 
-        this.hasMany(models.Bus_seat, {
-            foreignKey: "templateId",
-            type: DataTypes.UUID
-        });
     // End of your additional association 
     }
   }
