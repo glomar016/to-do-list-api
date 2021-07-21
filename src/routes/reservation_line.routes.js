@@ -8,6 +8,7 @@ router.put("/:id", reservation_lineController.update);
 router.get("/findAll/:id", reservation_lineController.findAll);
 // router.get("/datatable", reservation_lineController.findDataTable);
 router.get("/:id", reservation_lineController.findOne);
+router.put("/delete_reservation_lines/:id", reservation_lineController.delete_reservation_lines);
 router.delete("/:id", reservation_lineController.delete);
 
 module.exports = router;

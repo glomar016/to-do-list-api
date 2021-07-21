@@ -199,3 +199,41 @@ exports.bulkCreate = async (req, res) => {
     });
 
 };
+
+exports.delete_reservation_lines = (req, res) => {
+    const reservationId = req.params.id;
+    const body = { status: "Inactive" };
+
+    Reservation_line.update(body, {
+        where: { reservationId: reservationId },
+    })
+    .then((result) =>{
+        console.log(result);
+        if(result) {
+            // Success
+            Reservation_line.findAll({where: {reservationId: reservationId}}).then((data) =>{
+                res.send({
+                    error: false,
+                    data: data,
+                    message: [process.env.SUCCESS_UPDATE],
+                });
+            });
+        }
+        else{
+            // if there is an error 
+            res.status(500).send({
+                error: true,
+                data: [],
+                message: err.errors.map((e) => e.message)
+            });
+        }
+    })
+    .catch((err) => {
+        console.log(err)
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        });
+    });
+}
