@@ -193,7 +193,7 @@ exports.createBusInformationSeats = (req, res) => {
 }
 
 exports.findAllTemplate = (req, res) => {
-    
+
 
     Bus_seat.findAll({ 
          include: [{

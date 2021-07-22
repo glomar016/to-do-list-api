@@ -25,12 +25,19 @@ module.exports = (sequelize, DataTypes) => {
 
       this.belongsTo(models.Bus_seat, {
         foreignKey: "seatId",
+        as: "seat",
         type: DataTypes.UUID,
       });
 
       this.belongsTo(models.Insurance, {
         foreignKey: "insuranceId",
         type: DataTypes.UUID,
+      });
+
+      this.belongsTo(models.Reservation, {
+            foreignKey: "reservationId",
+            as: "reservation",
+            type: DataTypes.UUID,
       });
 
     }
