@@ -53,7 +53,7 @@ db.sequelize
 
 if(process.env.ALLOW_SYNC === "true"){
     db.sequelize
-    .sync({ force: true })
+    .sync({ alter: true })
     .then(() => 
         console.log('Done adding/updating database based on Models')
     );
