@@ -126,6 +126,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true, 
         }, 
 
+        paidAmount: {
+            type: DataTypes.STRING(500),
+            allowNull: true, 
+        }, 
+
         totalDiscount: {
             type: DataTypes.STRING(500),
             allowNull: true, 
