@@ -1,20 +1,21 @@
 const e = require('express');
 const db = require('../models');
-const Promo = db.Promo;
-
+const Bus_seat = db.Bus_seat;
 
 // Create
 exports.create = async (req, res) => {
-   
-    Promo.create(req.body)
+    
+    // req.body.created_by = req.user.id
+
+    Bus_seat.create(req.body)
     .then((data) => {
-        Promo.findByPk(data.id).then((result) => {
+        Bus_seat.findByPk(data.id).then((result) => {
             res.send({
                 error: false,
                 data: result,
-                message: "Promo is created successfully."
+                message: "Bus_seat created successfully."
             });
-        });
+        })
     })
     .catch((err) => {
         res.status(500).send({
@@ -23,20 +24,30 @@ exports.create = async (req, res) => {
             message: err.errors.map((e) => e.message)
         })
     });
+
 };
 
-//Retrive all 
+// Retrive all 
 exports.findAll = (req, res) => {
-    Promo.findAll({ include: ["busType"], 
-    where: { status: "Active"} })
+    Bus_seat.findAll({ 
+         include: [{
+                model: db.Bus_template,
+                as: "template"}
+        ],
+        where: { status: "Active", busInformationId: req.params.id},
+        order: [
+            ['sortNumber', 'ASC'],
+        ]
+    })
     .then((data) => {
         res.send({
             error: false,
             data: data,
-            message: "Promo retrived successfully."
+            message: "Retrived successfully."
         });
     })
     .catch((err) => {
+        console.log(err)
         res.status(500).send({
             error: true,
             data: [],
@@ -45,16 +56,15 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Promo.findByPk(id ,{include: ["busType"]})
+    Bus_seat.findByPk(id)
     .then((data) => {
         res.send({
             error: false,
             data: data,
-            message: "Retrieved specific promo successfully"
+            message: "Success!"
         });
     })
     .catch((err) => {
@@ -66,23 +76,21 @@ exports.findOne = (req, res) => {
     })
 };
 
-// Update
 exports.update = async (req, res) => {
     const id = req.params.id;
 
-   
-    Promo.update(req.body, {
+    Bus_seat.update(req.body, {
         where: {id: id},
     })
     .then((result) =>{
         console.log(result);
         if(result) {
             // Success
-            Promo.findByPk(id).then((data) =>{
+            Bus_seat.findByPk(id).then((data) =>{
                 res.send({
                     error: false,
                     data: data,
-                    message: "Promo is successfully updated.",
+                    message: [process.env.SUCCESS_UPDATE],
                 });
             });
         }
@@ -104,23 +112,23 @@ exports.update = async (req, res) => {
     });
 };
 
-//Delete
+// Delete
 exports.delete = (req, res) => {
     const id = req.params.id;
     const body = { status: "Inactive" };
 
-    Promo.update(body, {
+    Bus_seat.update(body, {
         where: {id: id},
     })
     .then((result) =>{
         console.log(result);
         if(result) {
             // Success
-            Promo.findByPk(id).then((data) =>{
+            Bus_seat.findByPk(id).then((data) =>{
                 res.send({
                     error: false,
                     data: data,
-                    message: "Succefully deleted a promo.",
+                    message: [process.env.SUCCESS_UPDATE],
                 });
             });
         }
@@ -142,24 +150,70 @@ exports.delete = (req, res) => {
     });
 };
 
-exports.findOnePromo = (req, res) => {
-    const promoCode = req.params.promoCode;
+exports.createBusSeats = (req, res) => {
+    
+    Bus_seat.bulkCreate(req.body)
+    .then((data) => {
+        Bus_seat.findAll(data.id).then((result) => {
+            res.send({
+                error: false,
+                data: result,
+                message: "Bus_seat created successfully."
+            });
+        })
+    })
+    .catch((err) => {
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+}
 
-    Promo.findOne({ 
-        where: { 
-            code: promoCode,
-            status: "Active"
-        } 
+exports.createBusInformationSeats = (req, res) => {
+    
+    Bus_seat.bulkCreate(req.body)
+    .then((data) => {
+        Bus_seat.findAll(data.id).then((result) => {
+            res.send({
+                error: false,
+                data: result,
+                message: "Bus_seat created successfully."
+            });
+        })
+    })
+    .catch((err) => {
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+}
+
+exports.findAllTemplate = (req, res) => {
+
+
+    Bus_seat.findAll({ 
+         include: [{
+                model: db.Bus_template,
+                as: "template"}
+        ],
+        where: { status: "Active", templateId: req.params.id},
+        order: [
+            ['sortNumber', 'ASC'],
+        ]
     })
     .then((data) => {
         res.send({
             error: false,
             data: data,
-            message: "Promo retrived successfully."
+            message: "Retrived successfully."
         });
     })
     .catch((err) => {
-        console.log(err);
+        console.log(err)
         res.status(500).send({
             error: true,
             data: [],

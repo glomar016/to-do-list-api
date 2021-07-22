@@ -25,7 +25,17 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.UUID
         });
 
+        this.belongsTo(models.Bus_template, {
+            foreignKey: "templateId",
+            as: "template",
+            type: DataTypes.UUID
+        });
 
+        this.belongsTo(models.Bus_information, {
+            foreignKey: "busInformationId",
+            as: "busInformation",
+            type: DataTypes.UUID
+        });
     // Add your additional association here
         
 
@@ -78,6 +88,10 @@ module.exports = (sequelize, DataTypes) => {
         },
         type: {
             type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        sortNumber: {
+            type: DataTypes.INTEGER,
             allowNull: true,
         },
         // End of additional columns 

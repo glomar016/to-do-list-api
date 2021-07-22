@@ -24,6 +24,8 @@ const reservation_LineRoute = require('./src/routes/reservation_Line.routes');
 const paymentRoute = require('./src/routes/payment.routes');
 const busTemplateRoute = require('./src/routes/Bus_template.routes');
 const chart_Of_AccountRoute = require('./src/routes/Chart_of_account.routes');
+const busRegistrationRoute = require('./src/routes/bus_registration.routes');
+const busSeatRoute = require('./src/routes/bus_seat.routes');
 
 var app = express();
 
@@ -51,7 +53,7 @@ db.sequelize
 
 if(process.env.ALLOW_SYNC === "true"){
     db.sequelize
-    .sync({ alter: true })
+    .sync({ force: true })
     .then(() => 
         console.log('Done adding/updating database based on Models')
     );
@@ -104,6 +106,8 @@ app.use(`${process.env.API_VERSION}/reservation_line`, reservation_LineRoute);
 app.use(`${process.env.API_VERSION}/payment`, paymentRoute);
 app.use(`${process.env.API_VERSION}/Bus_template`, busTemplateRoute);
 app.use(`${process.env.API_VERSION}/Chart_of_account`, chart_Of_AccountRoute);
+app.use(`${process.env.API_VERSION}/bus_registration`, busRegistrationRoute);
+app.use(`${process.env.API_VERSION}/bus_seat`, busSeatRoute);
 
 
 const PORT = process.env.PORT || 5000;
