@@ -55,7 +55,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Fare.findByPk(id)
+    Fare.findByPk(id, {include: ["typeId"]})
     .then((data) => {
         res.send({
             error: false,
