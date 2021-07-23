@@ -155,3 +155,27 @@ exports.delete = (req, res) => {
         });
     });
 };
+
+// Retrive all 
+exports.show_user_payment = (req, res) => {
+    Payment.findAll({
+        include: [{
+            model: db.Reservation,
+            as: "reservation"
+        }],
+        where: { status: "Active", created_by: req.params.id } })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Retrived successfully."
+        });
+    })
+    .catch((err) => {
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+};
