@@ -164,3 +164,48 @@ exports.delete = (req, res) => {
         });
     });
 };
+
+
+// Retrive all 
+exports.show_user_reservations = (req, res) => {
+    Reservation.findAll({ 
+        include: [{
+            model: db.Schedule,
+            as: "schedule",
+            include: [{
+                model: db.Route,
+                as: "route",
+                include: [
+                    {
+                        model: db.Terminal,
+                        as: "origin"
+                    },
+                    {
+                        model: db.Terminal,
+                        as: "destination"
+                    }
+                ]
+            }],
+        },
+        {
+            model: db.Promo,
+            as: "promo",
+        }],
+        where: { status: "Active", created_by: req.params.id} 
+    })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Retrived successfully."
+        });
+    })
+    .catch((err) => {
+        console.log(err)
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+};
