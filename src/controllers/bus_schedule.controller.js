@@ -76,6 +76,56 @@ exports.findAll = async (req, res) => {
     });
 };
 
+exports.findAllDashboard = async (req, res) => {
+    date = req.params.date
+    busSchedule.findAll({ 
+        include: [{
+            model: Schedule,
+            as : "busSchedule",
+            include: {
+                model: Route,
+                as: "route",
+                include: [{
+                    model: Terminal,
+                    as: "origin"
+                },
+                {
+                    model: Terminal,
+                    as: "destination"
+                }]
+            }
+        },
+        {
+            model: busInformation,
+            as : "busInformation",
+            include: {
+                model: Bus_type,
+                as: "busTypeId"
+            }
+        },
+        ], 
+        where: { 
+            status: "Active",
+            scheduleDate: date
+        } 
+        })
+    .then((data) => {
+        res.send({
+            error: false,
+            data: data,
+            message: "Retrieved successfully."
+        });
+    })
+    .catch((err) => {
+        console.log(err)
+        res.status(500).send({
+            error: true,
+            data: [],
+            message: err.errors.map((e) => e.message)
+        })
+    });
+};
+
 // Retrieve all 
 exports.findAllAvailable = async (req, res) => {
     routeId = req.params.routeId

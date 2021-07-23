@@ -1,4 +1,5 @@
 const e = require('express');
+const { Op } = require('sequelize');
 const db = require('../models');
 const Route = db.Route;
 
@@ -34,6 +35,35 @@ const Route = db.Route;
         Route.findAll({ 
             include: ["origin", "destination"],
             where: {status: "Active"} })
+        .then((data) => {
+            res.send({
+                error: false,
+                data: data,
+                message: "Retrieved data successfully"
+            });
+        })
+        .catch((err) => {
+            res.status(500).send({
+                error: true,
+                data: [],
+                message: err.errors.map((e) => e.message)
+            });
+        })
+
+    };
+
+    exports.findAllDashboard = (req, res) => {
+        date = req.params.date
+
+        Route.findAll({ 
+            include: ["origin", "destination"],
+            where: {status: "Active",
+                    effectivityDate: {
+                    [Op.gt]: date
+                }
+            }
+        
+        })
         .then((data) => {
             res.send({
                 error: false,
