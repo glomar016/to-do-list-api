@@ -6,6 +6,7 @@ router.post("/", Bus_seatController.create);
 router.post("/createBusSeats", Bus_seatController.createBusSeats);
 router.post("/createBusInformationSeats", Bus_seatController.createBusInformationSeats);
 router.put("/:id", Bus_seatController.update);
+router.put("/resetBusSeat/:id", Bus_seatController.resetBusSeat);
 router.get("/:id", Bus_seatController.findAll);
 router.get("/findAllTemplate/:id", Bus_seatController.findAllTemplate);
 // router.get("/datatable", Bus_seatController.findDataTable);
