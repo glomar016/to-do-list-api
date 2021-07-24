@@ -29,7 +29,9 @@ exports.create = async (req, res) => {
 
 // Retrive all 
 exports.findAll = (req, res) => {
-    Bus_driver.findAll({ where: { status: "Active"} })
+    Bus_driver.findAll({ 
+        include: ["busDriver"],
+        where: { status: "Active"} })
     .then((data) => {
         res.send({
             error: false,
@@ -49,7 +51,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Bus_driver.findByPk(id)
+    Bus_driver.findByPk(id, {include: ["busDriver"]})
     .then((data) => {
         res.send({
             error: false,
