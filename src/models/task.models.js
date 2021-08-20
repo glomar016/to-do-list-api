@@ -5,7 +5,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 
     // class Guide. Guide should be name of the file name.
-  class Fare extends Model {
+class Task extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     // Default in every static associate
         this.belongsTo(models.User, {
             foreignKey: "created_by",
+            as: "created",
             type: DataTypes.UUID
         });
 
@@ -26,17 +27,13 @@ module.exports = (sequelize, DataTypes) => {
         });
 
     // Add your additional association here
-        this.belongsTo(models.Bus_type, {
-            foreignKey: "busTypeId",
-            as: "typeId",
-            type: DataTypes.UUID
-        });
+        
     // End of your additional association 
     }
   }
   
   // Change Guide.init to {{Filename}}.init 
-  Fare.init(
+  Task.init(
     {
         // Default column this is a primary key
         id: {
@@ -70,26 +67,31 @@ module.exports = (sequelize, DataTypes) => {
         },
     
         // Add your additional columns here //
-        effectivityDate: {
-            type: DataTypes.DATE,
+        title: {
+            type: DataTypes.STRING,
             allowNull: true, 
         },
-        initialKm: {
-            type: DataTypes.STRING(255),
+        
+        description: {
+            type: DataTypes.STRING,
             allowNull: true, 
         },
-        initialPrice: {
-            type: DataTypes.STRING(255),
+
+        priority: {
+            type: DataTypes.STRING,
             allowNull: true, 
         },
-        additionalKm: {
-            type: DataTypes.STRING(255),
-            allowNull: true, 
+
+        start_date: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
-        discountPercentage: {
-            type: DataTypes.STRING(255),
-            allowNull: true, 
-        },
+
+        end_date: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        }
+
         
         // End of additional columns //
     },
@@ -98,12 +100,11 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         createdAt: "created_at",
         updatedAt: "updated_at",
-        modelName: "Fare", // Change model name base on file name
+        modelName: "Task", // Change model name base on file name
     }
   );
 
   // Change Guide to file name first letter should be in upper case
-  return Fare;
+  return Task;
 };
 // ------------------------------------------------------------------------ END OF MODEL ----------------------------------------------------------------------------------- //
-

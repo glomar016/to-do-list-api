@@ -5,7 +5,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 
     // class Guide. Guide should be name of the file name.
-    class User extends Model {
+class User extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       
     // Default in every static associate
         this.belongsTo(models.User, {
-            as: "createdBy",
             foreignKey: "created_by",
             type: DataTypes.UUID
         });
@@ -27,6 +26,12 @@ module.exports = (sequelize, DataTypes) => {
         });
 
     // Add your additional association here
+
+        this.hasMany(models.Task, {
+            foreignKey: "task_user_id",
+            as: "user_task",
+            type: DataTypes.UUID
+        });
         
     // End of your additional association 
     }
@@ -71,28 +76,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true, 
         },
-
-        middleName: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
         
         lastName: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        birthday: {
-            type: DataTypes.DATEONLY,
-            allowNull: true, 
-        },
-
-        gender: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        mobileNumber: {
             type: DataTypes.STRING,
             allowNull: true, 
         },
@@ -108,65 +93,11 @@ module.exports = (sequelize, DataTypes) => {
             }, 
         },
 
-        address: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        municipality: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        province: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        country: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        zipCode: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        securityQuestion: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        answer: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
         password: {
             type: DataTypes.STRING,
             allowNull: true, 
         },
 
-        photo: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        position: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        employeeNumber: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
-
-        userType: {
-            type: DataTypes.STRING,
-            allowNull: true, 
-        },
         
         // End of additional columns //
     },

@@ -1,22 +1,23 @@
 const e = require('express');
 const db = require('../models');
-const Promo = db.Promo;
-
+const Task = db.Task;
 
 // Create
 exports.create = async (req, res) => {
-   
-    Promo.create(req.body)
+    
+    // req.body.created_by = req.user.id;
+    Task.create(req.body)
     .then((data) => {
-        Promo.findByPk(data.id).then((result) => {
+        Task.findByPk(data.id).then((result) => {
             res.send({
                 error: false,
                 data: result,
-                message: "Promo is created successfully."
+                message: "Task created successfully."
             });
         });
     })
     .catch((err) => {
+        console.log(err)
         res.status(500).send({
             error: true,
             data: [],
@@ -25,15 +26,14 @@ exports.create = async (req, res) => {
     });
 };
 
-//Retrive all 
+// Retrive all 
 exports.findAll = (req, res) => {
-    Promo.findAll({ include: ["busType"], 
-    where: { status: "Active"} })
+    Task.findAll({ where: { status: "Active", task_user_id: req.params.id} })
     .then((data) => {
         res.send({
             error: false,
             data: data,
-            message: "Promo retrived successfully."
+            message: "Retrieve successfully."
         });
     })
     .catch((err) => {
@@ -45,16 +45,15 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Promo.findByPk(id ,{include: ["busType"]})
+    Task.findByPk(id)
     .then((data) => {
         res.send({
             error: false,
             data: data,
-            message: "Retrieved specific promo successfully"
+            message: "Success!"
         });
     })
     .catch((err) => {
@@ -66,23 +65,21 @@ exports.findOne = (req, res) => {
     })
 };
 
-// Update
 exports.update = async (req, res) => {
     const id = req.params.id;
 
-   
-    Promo.update(req.body, {
+    Task.update(req.body, {
         where: {id: id},
     })
     .then((result) =>{
         console.log(result);
         if(result) {
             // Success
-            Promo.findByPk(id).then((data) =>{
+            Task.findByPk(id).then((data) =>{
                 res.send({
                     error: false,
                     data: data,
-                    message: "Promo is successfully updated.",
+                    message: [process.env.SUCCESS_UPDATE],
                 });
             });
         }
@@ -104,23 +101,23 @@ exports.update = async (req, res) => {
     });
 };
 
-//Delete
+// Delete
 exports.delete = (req, res) => {
     const id = req.params.id;
     const body = { status: "Inactive" };
 
-    Promo.update(body, {
+    Task.update(body, {
         where: {id: id},
     })
     .then((result) =>{
         console.log(result);
         if(result) {
             // Success
-            Promo.findByPk(id).then((data) =>{
+            Task.findByPk(id).then((data) =>{
                 res.send({
                     error: false,
                     data: data,
-                    message: "Succefully deleted a promo.",
+                    message: [process.env.SUCCESS_UPDATE],
                 });
             });
         }
@@ -139,31 +136,5 @@ exports.delete = (req, res) => {
             data: [],
             message: err.errors.map((e) => e.message)
         });
-    });
-};
-
-exports.findOnePromo = (req, res) => {
-    const promoCode = req.params.promoCode;
-
-    Promo.findOne({ 
-        where: { 
-            code: promoCode,
-            status: "Active"
-        } 
-    })
-    .then((data) => {
-        res.send({
-            error: false,
-            data: data,
-            message: "Promo retrived successfully."
-        });
-    })
-    .catch((err) => {
-        console.log(err);
-        res.status(500).send({
-            error: true,
-            data: [],
-            message: err.errors.map((e) => e.message)
-        })
     });
 };
