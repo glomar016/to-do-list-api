@@ -115,45 +115,75 @@ exports.update = async (req, res) => {
     const id = req.params.id;
 
     req.body.full_name = "";
+    req.body.password = await bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUND));
 
-    if(req.body.password){
-        req.body.password = await bcrypt.hash(
-            req.body.password,
-            parseInt(process.env.SALT_ROUND)
+    User.findOne({ where: { email: req.body.email, status: "Active" }})
+    .then((data) => {
+        if(data) {
+            bcrypt.compare(
+                req.body.oldpassword,
+                data.password,
+                function (err, result) {
+                    if(result){
+                        User.update(req.body, {
+                                where: {id: id},
+                            })
+                            .then((result) =>{
+                                console.log(result);
+                                if(result) {
+                                    // Success
+                                    User.findByPk(id).then((data) =>{
+                                        res.send({
+                                            error: false,
+                                            data: data,
+                                            message: [process.env.SUCCESS_UPDATE],
+                                        });
+                                    });
+                                }
+                                else{
+                                    // if there is an error 
+                                    res.status(500).send({
+                                        error: true,
+                                        data: [],
+                                        message: err.errors.map((e) => e.message)
+                                    });
+                                }
+                            })
+                            .catch((err) => {
+                                res.status(500).send({
+                                    error: true,
+                                    data: [],
+                                    message: err.errors.map((e) => e.message)
+                                });
+                            });
+                    }
+                    else{
+                        res.status(500).send({
+                            error: true,
+                            data: [],
+                            message: ["Invalid old password."],
+                        });
+                    }
+                }
             );
-    }
-
-    User.update(req.body, {
-        where: {id: id},
-    })
-    .then((result) =>{
-        console.log(result);
-        if(result) {
-            // Success
-            User.findByPk(id).then((data) =>{
-                res.send({
-                    error: false,
-                    data: data,
-                    message: [process.env.SUCCESS_UPDATE],
-                });
-            });
         }
         else{
-            // if there is an error 
             res.status(500).send({
                 error: true,
                 data: [],
-                message: err.errors.map((e) => e.message)
-            });
+                message: ["Email does not exists."]
+            })
         }
     })
     .catch((err) => {
         res.status(500).send({
             error: true,
             data: [],
-            message: err.errors.map((e) => e.message)
+            message: err.errors.map((e) => e.message) || process.env.GENERAL_ERROR_MSG
         });
     });
+
+    
 };
 
 // Delete
